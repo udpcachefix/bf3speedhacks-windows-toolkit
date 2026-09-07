@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+; Battlefield 6 - Force High CPU Process Priority
+; CpuPriorityClass:
+; 1 = Idle
+; 2 = Normal
+; 3 = High
+; 4 = Realtime
+; 5 = Below Normal
+; 6 = Above Normal
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\bf6.exe\PerfOptions]
+"CpuPriorityClass"=dword:00000003

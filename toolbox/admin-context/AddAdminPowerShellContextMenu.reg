@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\Shell\RunAsAdminPS]
+@="Run with PowerShell (Admin)"
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\Microsoft.PowerShellScript.1\Shell\RunAsAdminPS\Command]
+@="powershell.exe -Command \"Start-Process powershell.exe -ArgumentList '-NoExit -File \\\"%1\\\"' -Verb RunAs\""
