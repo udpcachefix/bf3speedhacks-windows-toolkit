@@ -4,6 +4,12 @@ A consolidated, auditable collection of maintained Windows utilities, Windows wo
 
 The repository combines the former **udp legacy Windows Workarounds / BIOS** project and the **WFiles** rebuild into one maintained codebase.
 
+## Website
+
+[**Open the BF3Speedhacks Windows Toolkit website**](https://project.bf3speedhacks.com)
+
+[![BF3Speedhacks Windows Toolkit website preview](docs/assets/website-preview.svg)](https://project.bf3speedhacks.com)
+
 > [!WARNING]
 > Some files change Windows networking, update policy, BitLocker-related configuration, firewall behavior, hibernation, firmware settings, or other system state. Read the matching documentation before applying changes. Files under `archive/` are historical reference material and are **not recommended for execution on current Windows systems**.
 
@@ -175,15 +181,6 @@ Run the non-destructive static checks from the repository root:
 
 GitHub Actions runs the same checks on pushes and pull requests.
 
-## Source project pages
-
-Original project pages represented by the Windows Workarounds / BIOS material:
-
-* [Windows Workarounds](https://project.bf3speedhacks.com/home/windows-workarounds)
-* [BIOS Configuration](https://project.bf3speedhacks.com/home/bios-configuration)
-
 ## License
 
 Maintained project code and original project documentation are released under the [MIT License](LICENSE), subject to the scope described in [LICENSING.md](LICENSING.md).
-
-Historical material under `archive/` is preserved for reference and is not automatically relicensed by the repository-level MIT license unless the project owner holds the relevant rights and explicitly states otherwise.
