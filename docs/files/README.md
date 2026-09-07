@@ -12,7 +12,7 @@ The repository combines the former **udp legacy Windows Workarounds / BIOS** pro
 | Path | Purpose |
 | --- | --- |
 | `scripts/` | Maintained PowerShell tools with validation and safer defaults |
-| `toolbox/` | 30 imported utilities from the supplied Amin, Cleanup, Network reset, and NVIDIA archives |
+| `toolbox/` | 30 imported utilities from the supplied Colleague, Cleanup, Network reset, and NVIDIA archives |
 | `source-archives/` | The four supplied 7z archives preserved as received |
 | `docs/index.html` | GitHub Pages entry point; publish `/docs` from the `main` branch |
 | `docs/WINDOWS_WORKAROUNDS.md` | Windows Workarounds reference |

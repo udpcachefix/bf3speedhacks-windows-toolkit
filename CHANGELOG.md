@@ -2,7 +2,7 @@
 
 ## 2.1.0 - 2026-09-07
 
-* Added all 30 files from `Amin.7z`, `Cleanup.7z`, `Network reset.7z`, and `nvidia.7z` under a function-based `toolbox/` structure without modifying their bytes.
+* Added all 30 files from `Colleague.7z`, `Cleanup.7z`, `Network reset.7z`, and `nvidia.7z` under a function-based `toolbox/` structure without modifying their bytes.
 * Added per-file behavior, usage, limitations, and risk documentation.
 * Added SHA-256 import manifests and preserved the four original 7z files under `source-archives/`.
 * Added detailed NVIDIA Inspector profile documentation including every supplied Setting ID and raw value.
