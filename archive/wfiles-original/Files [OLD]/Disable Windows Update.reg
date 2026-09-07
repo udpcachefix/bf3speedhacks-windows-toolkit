@@ -1,0 +1,45 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+"AUOptions"=dword:00000002
+
+;Configure Automatic Updates - Disabled
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+"NoAutoUpdate"=dword:00000001
+
+;Auto Reboot after installing Updates - Disabled
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+"NoAutoRebootWithLoggedOnUsers"=dword:00000001
+
+;Device driver installation - Disabled (might not work)
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DriverSearching]
+"SearchOrderConfig"=dword:00000000
+
+;Do not include drivers with Windows Updates - Enabled
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate]
+"ExcludeWUDriversInQualityUpdate"=dword:00000001
+
+;Do not connect to any Windows Update Internet locations - Disabled (disable for activation)
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate]
+"DoNotConnectToWindowsUpdateInternetLocations"=dword:00000000
+
+;Specify intranet Microsoft update service location - Enabled
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+"UseWUServer"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate]
+"UpdateServiceUrlAlternate"="http://disableupdateserver.com/"
+"WUServer"="http://disableupdateserver.com/"
+"WUStatusServer"="http://disableupdateserver.com/"
+
+;Automatic Updates immediate installation - Disabled
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+"AutoInstallMinorUpdates"=dword:00000000
+
+;Turn on recommended updates via Automatic Updates - Disabled
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU]
+"IncludeRecommendedUpdates"=dword:00000000
+
+;Install Malicious Software Removal Tool - Disabled
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT]
+"DontOfferThroughWUAU"=dword:00000001
