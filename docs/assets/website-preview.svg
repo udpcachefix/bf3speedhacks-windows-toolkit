@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">BF3Speedhacks Windows Toolkit website preview</title>
+  <desc id="desc">Preview of the BF3Speedhacks Windows Toolkit GitHub Pages website.</desc>
+  <rect width="1200" height="630" fill="#0b0f14"/>
+  <rect x="0" y="0" width="1200" height="62" fill="#0d1117"/>
+  <line x1="0" y1="62" x2="1200" y2="62" stroke="#263140"/>
+  <text x="70" y="38" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" fill="#d8dee9">BF3<tspan fill="#66a3ff">Speedhacks</tspan></text>
+  <g font-family="Arial,Helvetica,sans-serif" font-size="15" fill="#9aa7b8">
+    <text x="680" y="38" fill="#e6edf3">Overview</text>
+    <text x="765" y="38">Toolbox</text>
+    <text x="840" y="38">Network</text>
+    <text x="920" y="38">NVIDIA</text>
+    <text x="982" y="38">Cleanup</text>
+    <text x="1052" y="38">BIOS</text>
+    <text x="1098" y="38">Safety</text>
+  </g>
+  <text x="70" y="145" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" letter-spacing="2" fill="#66a3ff">WINDOWS TOOLING · DOCUMENTATION · HISTORICAL REFERENCE</text>
+  <text x="70" y="197" font-family="Arial,Helvetica,sans-serif" font-size="40" font-weight="700" fill="#e6edf3">BF3Speedhacks Windows Toolkit</text>
+  <text x="70" y="240" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#c5ced9">Windows performance, latency, network, NVIDIA, BIOS and system tooling</text>
+  <text x="70" y="272" font-family="Arial,Helvetica,sans-serif" font-size="20" fill="#c5ced9">in one documented and auditable project.</text>
+  <rect x="70" y="320" width="1060" height="88" rx="10" fill="#171711" stroke="#e7b94f" stroke-width="4"/>
+  <text x="95" y="355" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" fill="#e6edf3">Read before running.</text>
+  <text x="262" y="355" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#d4d9df">Machine-wide networking, power, Windows Update and NVIDIA changes are documented</text>
+  <text x="95" y="384" font-family="Arial,Helvetica,sans-serif" font-size="18" fill="#d4d9df">with behavior, usage guidance and risk ratings.</text>
+  <g font-family="Arial,Helvetica,sans-serif">
+    <rect x="70" y="455" width="245" height="112" rx="12" fill="#111824" stroke="#2a3a50"/>
+    <text x="92" y="498" font-size="31" font-weight="700" fill="#e6edf3">30</text>
+    <text x="92" y="529" font-size="15" fill="#98a8bb">toolbox files</text>
+    <rect x="337" y="455" width="245" height="112" rx="12" fill="#111824" stroke="#2a3a50"/>
+    <text x="359" y="498" font-size="31" font-weight="700" fill="#e6edf3">Network</text>
+    <text x="359" y="529" font-size="15" fill="#98a8bb">MTU, RSS, reset tools</text>
+    <rect x="604" y="455" width="245" height="112" rx="12" fill="#111824" stroke="#2a3a50"/>
+    <text x="626" y="498" font-size="31" font-weight="700" fill="#e6edf3">NVIDIA</text>
+    <text x="626" y="529" font-size="15" fill="#98a8bb">profiles and tuning</text>
+    <rect x="871" y="455" width="259" height="112" rx="12" fill="#111824" stroke="#2a3a50"/>
+    <text x="893" y="498" font-size="31" font-weight="700" fill="#e6edf3">BIOS</text>
+    <text x="893" y="529" font-size="15" fill="#98a8bb">configuration reference</text>
+  </g>
+  <text x="70" y="605" font-family="Arial,Helvetica,sans-serif" font-size="15" fill="#728096">project.bf3speedhacks.com</text>
+</svg>
