@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NVIDIA · udp legacy</title>
+<meta name="description" content="udp legacy Windows Toolkit">
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="assets/site.js"></script>
+</head><body>
+<header><nav class="nav"><a class="brand" href="index.html">udp <span>legacy</span></a><a class="" href="index.html">Overview</a><a class="" href="toolbox.html">Toolbox</a><a class="" href="network.html">Network</a><a class="active" href="nvidia.html">NVIDIA</a><a class="" href="cleanup.html">Cleanup</a><a class="" href="bios.html">BIOS</a><a class="" href="legacy.html">Legacy</a><a class="" href="files.html">Files</a><a class="" href="safety.html">Safety</a></nav></header>
+<main><section class="hero"><div class="kicker">Documented file collection</div><h1>NVIDIA</h1>
+<p>NVIDIA Profile Inspector presets, apply/revert wrappers and the supplied third-party binary. Global Base Profile changes are hardware and driver sensitive.</p></section>
+<div class="toolbar"><input id="search" type="search" placeholder="Search NVIDIA files and behavior…"></div>
+<article class="tool" data-tool data-category="NVIDIA" data-risk="High" data-search="nvidia/inspector/Apply_NVIDIA_Inspector_Settings.cmd Apply NVIDIA Inspector preset Imports NVIDIA_Inspector_Settings.nip with inspector.exe. If inspector.exe is missing, it downloads a binary from the FR33THY/Ultimate-Files GitHub path embedded in the CMD. The import targets the NVIDIA Base Profile, so effects are global rather than game-specific. The downloader does not pin a version or verify a cryptographic hash before execution. The supplied repo copy of inspector.exe is therefore documented with its SHA-256 separately. NVIDIA High">
+<div class="tool-top"><div><h3>Apply NVIDIA Inspector preset</h3><div class="path">nvidia/inspector/Apply_NVIDIA_Inspector_Settings.cmd</div></div><span class="badge High">High</span></div>
+<p>Imports NVIDIA_Inspector_Settings.nip with inspector.exe. If inspector.exe is missing, it downloads a binary from the FR33THY/Ultimate-Files GitHub path embedded in the CMD.</p>
+<div class="actions"><a class="button" href="files/toolbox/nvidia/inspector/Apply_NVIDIA_Inspector_Settings.cmd" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>The import targets the NVIDIA Base Profile, so effects are global rather than game-specific. The downloader does not pin a version or verify a cryptographic hash before execution. The supplied repo copy of inspector.exe is therefore documented with its SHA-256 separately.</p><p><strong>Usage:</strong> Prefer using the included, hash-documented binary or independently verified NVIDIA Profile Inspector release. Export current profiles before applying.</p></details>
+</article><article class="tool" data-tool data-category="NVIDIA" data-risk="Medium" data-search="nvidia/inspector/NVIDIA_Inspector_Default.nip Empty NVIDIA Base Profile import Contains an empty Base Profile with no settings. The paired revert CMD imports this file. It is not a captured snapshot of the user&#x27;s pre-change NVIDIA settings, so it should not be treated as a guaranteed byte-for-byte rollback of every previous profile value. NVIDIA Medium">
+<div class="tool-top"><div><h3>Empty NVIDIA Base Profile import</h3><div class="path">nvidia/inspector/NVIDIA_Inspector_Default.nip</div></div><span class="badge Medium">Medium</span></div>
+<p>Contains an empty Base Profile with no settings.</p>
+<div class="actions"><a class="button" href="files/toolbox/nvidia/inspector/NVIDIA_Inspector_Default.nip" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>The paired revert CMD imports this file. It is not a captured snapshot of the user&#x27;s pre-change NVIDIA settings, so it should not be treated as a guaranteed byte-for-byte rollback of every previous profile value.</p><p><strong>Usage:</strong> Use only after understanding NVIDIA Profile Inspector import behavior. A real backup exported before applying changes is safer.</p></details>
+</article><article class="tool" data-tool data-category="NVIDIA" data-risk="High" data-search="nvidia/profiles/Base Profile.nip Legacy NVIDIA Inspector Base Profile Imports 38 Base Profile values into NVIDIA Profile Inspector, including refresh-rate, G-SYNC/VRR, pre-rendered-frame, filtering, power-management, NIS, V-Sync, cache and OpenGL-GPU fields. Several entries use raw numeric driver enums and five have no human-readable setting name. The Preferred OpenGL GPU string contains a captured GPU identifier, making the profile hardware-specific. Treat this as a legacy reference profile, not a universal preset. NVIDIA High">
+<div class="tool-top"><div><h3>Legacy NVIDIA Inspector Base Profile</h3><div class="path">nvidia/profiles/Base Profile.nip</div></div><span class="badge High">High</span></div>
+<p>Imports 38 Base Profile values into NVIDIA Profile Inspector, including refresh-rate, G-SYNC/VRR, pre-rendered-frame, filtering, power-management, NIS, V-Sync, cache and OpenGL-GPU fields.</p>
+<div class="actions"><a class="button" href="files/toolbox/nvidia/profiles/Base%20Profile.nip" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>Several entries use raw numeric driver enums and five have no human-readable setting name. The Preferred OpenGL GPU string contains a captured GPU identifier, making the profile hardware-specific. Treat this as a legacy reference profile, not a universal preset.</p><p><strong>Usage:</strong> Inspect in NVIDIA Profile Inspector before importing. Export the current driver profiles first.</p></details>
+</article><article class="tool" data-tool data-category="NVIDIA" data-risk="Third-party" data-search="nvidia/inspector/inspector.exe NVIDIA Profile Inspector executable Windows PE32 .NET executable identifying itself as NVIDIA Profile Inspector. SHA-256: 7d5510deeaacb50c88a49bbf1d894dae44c5ce58c00d5a88392346646b14e8f3. This is a third-party binary supplied inside the uploaded archive. It was not executed during repository preparation. Its license/provenance is not established by the archive itself, so the repository-level MIT license explicitly does not relicense it. NVIDIA Third-party">
+<div class="tool-top"><div><h3>NVIDIA Profile Inspector executable</h3><div class="path">nvidia/inspector/inspector.exe</div></div><span class="badge Third-party">Third-party</span></div>
+<p>Windows PE32 .NET executable identifying itself as NVIDIA Profile Inspector. SHA-256: 7d5510deeaacb50c88a49bbf1d894dae44c5ce58c00d5a88392346646b14e8f3.</p>
+<div class="actions"><a class="button" href="files/toolbox/nvidia/inspector/inspector.exe" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>This is a third-party binary supplied inside the uploaded archive. It was not executed during repository preparation. Its license/provenance is not established by the archive itself, so the repository-level MIT license explicitly does not relicense it.</p><p><strong>Usage:</strong> Verify provenance and hash before execution. The project documentation records the exact supplied hash so replacements are detectable.</p></details>
+</article><article class="tool" data-tool data-category="NVIDIA" data-risk="High" data-search="nvidia/inspector/NVIDIA_Inspector_Settings.nip NVIDIA low-latency Base Profile preset Imports 31 NVIDIA Base Profile settings covering frame limiter, G-SYNC/VRR, pre-rendered frames, refresh rate, low-latency mode, V-Sync, filtering, CUDA, power management, shader cache, threaded optimization and OpenGL behavior. Many values are NVIDIA raw enum values. The Preferred OpenGL GPU entry contains a captured device identifier, so it is not hardware-neutral. Global Base Profile changes can affect all games and applications using the NVIDIA driver. NVIDIA High">
+<div class="tool-top"><div><h3>NVIDIA low-latency Base Profile preset</h3><div class="path">nvidia/inspector/NVIDIA_Inspector_Settings.nip</div></div><span class="badge High">High</span></div>
+<p>Imports 31 NVIDIA Base Profile settings covering frame limiter, G-SYNC/VRR, pre-rendered frames, refresh rate, low-latency mode, V-Sync, filtering, CUDA, power management, shader cache, threaded optimization and OpenGL behavior.</p>
+<div class="actions"><a class="button" href="files/toolbox/nvidia/inspector/NVIDIA_Inspector_Settings.nip" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>Many values are NVIDIA raw enum values. The Preferred OpenGL GPU entry contains a captured device identifier, so it is not hardware-neutral. Global Base Profile changes can affect all games and applications using the NVIDIA driver.</p><p><strong>Usage:</strong> Export current profiles first, inspect each setting in the matching NVIDIA Profile Inspector version and test per workload.</p></details>
+</article><article class="tool" data-tool data-category="NVIDIA" data-risk="Medium" data-search="nvidia/inspector/Revert_NVIDIA_Inspector_Settings_Only.cmd Revert NVIDIA Inspector preset Imports NVIDIA_Inspector_Default.nip using inspector.exe and uses the same GitHub fallback downloader if the executable is missing. The supplied default .nip is an empty Base Profile, not a backup taken before modification. Therefore this script is a convenience reset attempt, not a guaranteed restoration of the user&#x27;s previous custom settings. NVIDIA Medium">
+<div class="tool-top"><div><h3>Revert NVIDIA Inspector preset</h3><div class="path">nvidia/inspector/Revert_NVIDIA_Inspector_Settings_Only.cmd</div></div><span class="badge Medium">Medium</span></div>
+<p>Imports NVIDIA_Inspector_Default.nip using inspector.exe and uses the same GitHub fallback downloader if the executable is missing.</p>
+<div class="actions"><a class="button" href="files/toolbox/nvidia/inspector/Revert_NVIDIA_Inspector_Settings_Only.cmd" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>The supplied default .nip is an empty Base Profile, not a backup taken before modification. Therefore this script is a convenience reset attempt, not a guaranteed restoration of the user&#x27;s previous custom settings.</p><p><strong>Usage:</strong> Prefer restoring an exported pre-change NVIDIA profile backup when one exists.</p></details>
+</article><hr><div class="markdown"><h1>NVIDIA Inspector reference</h1>
+<p>The supplied profiles change the NVIDIA <code>Base Profile</code>, so their scope is global rather than game-specific. Raw numeric values are preserved exactly because NVIDIA driver enums can vary by Inspector/driver version.</p>
+<blockquote>
+<p>Export the current driver profiles before importing a preset. The supplied empty <code>NVIDIA_Inspector_Default.nip</code> is not a snapshot of the user's prior configuration.</p>
+</blockquote>
+<h2>Imported legacy Base Profile</h2>
+<p>File: <code>toolbox/nvidia/profiles/Base Profile.nip</code><br />
+Profile: <code>Base Profile</code><br />
+SHA-256: <code>dc379e6d4c7e22262cc6803e7564e51bc8ad8b1a7ada22fd49204f06cb03fa11</code></p>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th style="text-align:right">ID</th>
+  <th>Raw value</th>
+  <th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>(unnamed / unknown)</td>
+  <td style="text-align:right"><code>390467</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>(unnamed / unknown)</td>
+  <td style="text-align:right"><code>983226</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture filtering - Negative LOD bias</td>
+  <td style="text-align:right"><code>1686376</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture filtering - Trilinear optimization</td>
+  <td style="text-align:right"><code>3066610</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Preferred refresh rate</td>
+  <td style="text-align:right"><code>6600001</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Maximum pre-rendered frames</td>
+  <td style="text-align:right"><code>8102046</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture filtering - Anisotropic filter optimization</td>
+  <td style="text-align:right"><code>8703344</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Vertical Sync</td>
+  <td style="text-align:right"><code>11041231</code></td>
+  <td><code>138504007</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Sharpening Value for NIS 2.0</td>
+  <td style="text-align:right"><code>11250465</code></td>
+  <td><code>50</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Enable NIS 2.0</td>
+  <td style="text-align:right"><code>11250721</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Enable NIS2 App Count</td>
+  <td style="text-align:right"><code>11250737</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Shader disk cache maximum size</td>
+  <td style="text-align:right"><code>11306135</code></td>
+  <td><code>102400</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>(unnamed / unknown)</td>
+  <td style="text-align:right"><code>12991097</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture filtering - Quality</td>
+  <td style="text-align:right"><code>13510289</code></td>
+  <td><code>10</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>(unnamed / unknown)</td>
+  <td style="text-align:right"><code>14366808</code></td>
+  <td><code>32</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture filtering - Anisotropic sample optimization</td>
+  <td style="text-align:right"><code>15151633</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Enable NIS 2.0 KMD NOTIFICATION</td>
+  <td style="text-align:right"><code>28027939</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Display the VRR Indicator</td>
+  <td style="text-align:right"><code>268604728</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Virtual Reality pre-rendered frames</td>
+  <td style="text-align:right"><code>269553971</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Anisotropic filtering setting</td>
+  <td style="text-align:right"><code>270426537</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>NVIDIA Predefined Ansel Usage</td>
+  <td style="text-align:right"><code>271965065</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>No override of Anisotropic filtering</td>
+  <td style="text-align:right"><code>272354485</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>NVIDIA Quality upscaling</td>
+  <td style="text-align:right"><code>272909380</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Power management mode</td>
+  <td style="text-align:right"><code>274197361</code></td>
+  <td><code>5</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Antialiasing - Gamma correction</td>
+  <td style="text-align:right"><code>276652957</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Antialiasing - Mode</td>
+  <td style="text-align:right"><code>276757595</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>FRL Low Latency</td>
+  <td style="text-align:right"><code>277041152</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Frame Rate Limiter</td>
+  <td style="text-align:right"><code>277041154</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Frame Rate Limiter for NVCPL</td>
+  <td style="text-align:right"><code>277041162</code></td>
+  <td><code>251</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>VRR requested state</td>
+  <td style="text-align:right"><code>278196727</code></td>
+  <td><code>2</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Anisotropic filtering mode</td>
+  <td style="text-align:right"><code>282245910</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Antialiasing - Setting</td>
+  <td style="text-align:right"><code>282555346</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Enable G-SYNC globally</td>
+  <td style="text-align:right"><code>294973784</code></td>
+  <td><code>2</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>(unnamed / unknown)</td>
+  <td style="text-align:right"><code>540508738</code></td>
+  <td><code>128</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>(unnamed / unknown)</td>
+  <td style="text-align:right"><code>543266006</code></td>
+  <td><code>128</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Threaded optimization</td>
+  <td style="text-align:right"><code>549528094</code></td>
+  <td><code>2</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Preferred OpenGL GPU</td>
+  <td style="text-align:right"><code>550564838</code></td>
+  <td><code>id,2.0:1B8010DE,00002A00,GF - (304,4,161,8192) @ (0)</code></td>
+  <td><code>String</code></td>
+</tr>
+<tr>
+  <td>(unnamed / unknown)</td>
+  <td style="text-align:right"><code>1343646814</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Current NVIDIA Inspector Settings</h2>
+<p>File: <code>toolbox/nvidia/inspector/NVIDIA_Inspector_Settings.nip</code><br />
+Profile: <code>Base Profile</code><br />
+SHA-256: <code>c717864e816292ca0f79e0c0ad4146ad2600cca626a5377c1cfbf293d3d25cf1</code></p>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th style="text-align:right">ID</th>
+  <th>Raw value</th>
+  <th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Frame Rate Limiter V3</td>
+  <td style="text-align:right"><code>277041154</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>GSYNC - Application Mode</td>
+  <td style="text-align:right"><code>294973784</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>GSYNC - Application State</td>
+  <td style="text-align:right"><code>279476687</code></td>
+  <td><code>4</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>GSYNC - Global Feature</td>
+  <td style="text-align:right"><code>278196567</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>GSYNC - Global Mode</td>
+  <td style="text-align:right"><code>278196727</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>GSYNC - Indicator Overlay</td>
+  <td style="text-align:right"><code>268604728</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Maximum Pre-Rendered Frames</td>
+  <td style="text-align:right"><code>8102046</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Preferred Refresh Rate</td>
+  <td style="text-align:right"><code>6600001</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Ultra Low Latency - CPL State</td>
+  <td style="text-align:right"><code>390467</code></td>
+  <td><code>2</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Ultra Low Latency - Enabled</td>
+  <td style="text-align:right"><code>277041152</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Vertical Sync</td>
+  <td style="text-align:right"><code>11041231</code></td>
+  <td><code>138504007</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Vertical Sync - Smooth AFR Behavior</td>
+  <td style="text-align:right"><code>270198627</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Vertical Sync - Tear Control</td>
+  <td style="text-align:right"><code>5912412</code></td>
+  <td><code>2525368439</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Vulkan/OpenGL Present Method</td>
+  <td style="text-align:right"><code>550932728</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Antialiasing - Gamma Correction</td>
+  <td style="text-align:right"><code>276652957</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Antialiasing - Mode</td>
+  <td style="text-align:right"><code>276757595</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Antialiasing - Setting</td>
+  <td style="text-align:right"><code>282555346</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Anisotropic Filter - Optimization</td>
+  <td style="text-align:right"><code>8703344</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Anisotropic Filter - Sample Optimization</td>
+  <td style="text-align:right"><code>15151633</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Anisotropic Filtering - Mode</td>
+  <td style="text-align:right"><code>282245910</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Anisotropic Filtering - Setting</td>
+  <td style="text-align:right"><code>270426537</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture Filtering - Negative LOD Bias</td>
+  <td style="text-align:right"><code>1686376</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture Filtering - Quality</td>
+  <td style="text-align:right"><code>13510289</code></td>
+  <td><code>20</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Texture Filtering - Trilinear Optimization</td>
+  <td style="text-align:right"><code>3066610</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>CUDA - Force P2 State</td>
+  <td style="text-align:right"><code>1343646814</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>CUDA - Sysmem Fallback Policy</td>
+  <td style="text-align:right"><code>283962569</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Power Management - Mode</td>
+  <td style="text-align:right"><code>274197361</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Shader Cache - Cache Size</td>
+  <td style="text-align:right"><code>11306135</code></td>
+  <td><code>4294967295</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Threaded Optimization</td>
+  <td style="text-align:right"><code>549528094</code></td>
+  <td><code>1</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>OpenGL GDI Compatibility</td>
+  <td style="text-align:right"><code>544392611</code></td>
+  <td><code>0</code></td>
+  <td><code>Dword</code></td>
+</tr>
+<tr>
+  <td>Preferred OpenGL GPU</td>
+  <td style="text-align:right"><code>550564838</code></td>
+  <td><code>id,2.0:268410DE,00000100,GF - (400,2,161,24564) @ (0)</code></td>
+  <td><code>String</code></td>
+</tr>
+</tbody>
+</table>
+<h2>Empty revert profile</h2>
+<p>File: <code>toolbox/nvidia/inspector/NVIDIA_Inspector_Default.nip</code><br />
+Profile: <code>Base Profile</code><br />
+SHA-256: <code>adb3886750108addeea8165ecee1ba056a6a98e1f0e7344dab7c1bf7a51dbc54</code></p>
+<p>No <code>ProfileSetting</code> entries are present. Importing this file therefore does not constitute a captured backup of earlier values.</p>
+<h2>Supplied executable</h2>
+<p><code>toolbox/nvidia/inspector/inspector.exe</code> is a Windows PE32 .NET executable identifying itself as NVIDIA Profile Inspector. It was not executed during preparation. SHA-256: <code>7d5510deeaacb50c88a49bbf1d894dae44c5ce58c00d5a88392346646b14e8f3</code>.</p>
+<p>The supplied archive does not establish a license for this binary. The repository-level MIT license does not relicense it. The two CMD wrappers contain a fallback download URL pointing to <code>FR33THYFR33THY/Ultimate-Files</code>; they do not verify a pinned cryptographic hash before running the downloaded file.</p>
+</div></main>
+<footer><div class="footer-inner">Windows Toolkit · Static GitHub Pages site · MIT applies only within the scope stated in LICENSING.md.</div></footer>
+</body></html>

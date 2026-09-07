@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BIOS configuration · udp legacy</title>
+<meta name="description" content="udp legacy Windows Toolkit">
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="assets/site.js"></script>
+</head><body>
+<header><nav class="nav"><a class="brand" href="index.html">udp <span>legacy</span></a><a class="" href="index.html">Overview</a><a class="" href="toolbox.html">Toolbox</a><a class="" href="network.html">Network</a><a class="" href="nvidia.html">NVIDIA</a><a class="" href="cleanup.html">Cleanup</a><a class="active" href="bios.html">BIOS</a><a class="" href="legacy.html">Legacy</a><a class="" href="files.html">Files</a><a class="" href="safety.html">Safety</a></nav></header>
+<main><section class="hero"><div class="kicker">Project documentation</div><h1>BIOS configuration</h1><p>Firmware reference carried over from the original project, with compatibility and security-sensitive notes.</p></section><div class="markdown"><h1>BIOS Configuration Reference</h1>
+<p>This is the complete configuration published on the BIOS Configuration page, reorganized without silently converting it into a universal recommendation.</p>
+<h2>Compatibility boundary</h2>
+<p>The menu vocabulary indicates an ASUS ROG Intel platform. Exact names, available values, defaults, and effects vary by motherboard model and BIOS version. Capture current settings or save a BIOS profile before changing anything. Change one category at a time and confirm boot, temperatures, storage, networking, USB, audio, BitLocker, virtualization, and sleep behavior.</p>
+<p>The source contains apparent typographical errors: &quot;Speed Shit&quot; is interpreted as Intel Speed Shift, &quot;Bandwith&quot; as Bandwidth, &quot;Tcc Offset Time Windows&quot; may be a board-specific TCC time-window label, &quot;AVX ICRN Offset&quot; may refer to an AVX instruction-core-ratio negative offset, and the VT-d value lacks a closing quotation mark. The original wording is noted where interpretation is uncertain.</p>
+<h2>Advanced &gt; APM Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>ErP Ready</td>
+  <td>Disabled</td>
+  <td>Allows standby power features that ErP mode may restrict. Higher off-state power consumption is possible.</td>
+</tr>
+<tr>
+  <td>Restore AC Power Loss</td>
+  <td>Power Off</td>
+  <td>The machine remains off after utility power returns.</td>
+</tr>
+<tr>
+  <td>Power On By PCI-E/PCI</td>
+  <td>Disabled</td>
+  <td>Disables wake/power-on from supported PCIe devices, including Wake-on-LAN paths on some boards.</td>
+</tr>
+<tr>
+  <td>Power On By RTC</td>
+  <td>Disabled</td>
+  <td>Disables scheduled firmware power-on by real-time clock.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; CPU Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Active Processor Cores</td>
+  <td>All</td>
+  <td>Exposes all enabled physical cores.</td>
+</tr>
+<tr>
+  <td>Intel Virtualization Technology</td>
+  <td>Disabled</td>
+  <td>Disables VT-x. Hyper-V, WSL 2, Windows Sandbox, many virtual machines, and virtualization-based security may not work.</td>
+</tr>
+<tr>
+  <td>Hardware Prefetcher</td>
+  <td>Enabled</td>
+  <td>Allows the CPU to prefetch predicted memory data. Normally appropriate.</td>
+</tr>
+<tr>
+  <td>Adjacent Cache Line Prefetch</td>
+  <td>Enabled</td>
+  <td>Allows adjacent-line prefetching. Workload-dependent but normally left at default.</td>
+</tr>
+<tr>
+  <td>Boot Performance</td>
+  <td>Max Non-Turbo Performance</td>
+  <td>Requests the highest non-turbo performance state during boot. Firmware-specific.</td>
+</tr>
+<tr>
+  <td>SW Guard Extensions (SGX)</td>
+  <td>Disabled</td>
+  <td>Disables Intel SGX. SGX is unavailable or deprecated on many newer client platforms.</td>
+</tr>
+<tr>
+  <td>Tcc Offset Time Windows</td>
+  <td>Auto</td>
+  <td>Preserves automatic firmware handling of this board-specific thermal-control value.</td>
+</tr>
+<tr>
+  <td>Execute Disable Bit</td>
+  <td>Disabled</td>
+  <td>Disables CPU NX/XD support required for hardware-enforced DEP. Security regression. Recommended repository baseline: Enabled.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; CPU Configuration &gt; CPU Power Management Control</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Intel SpeedStep</td>
+  <td>Disabled</td>
+  <td>Prevents traditional OS-controlled performance-state scaling. Can increase idle power/heat or alter boost behavior.</td>
+</tr>
+<tr>
+  <td>Turbo Mode</td>
+  <td>Enabled</td>
+  <td>Allows operation above base frequency within firmware power, current, and thermal limits.</td>
+</tr>
+<tr>
+  <td>CPU C-states</td>
+  <td>Disabled</td>
+  <td>Prevents deep idle states. May reduce some wake latency but increases idle power and temperature. Benefit must be measured.</td>
+</tr>
+<tr>
+  <td>CFG Lock</td>
+  <td>Disabled</td>
+  <td>Leaves the relevant model-specific register writable. Needed by some low-level configurations, but not a general performance setting.</td>
+</tr>
+<tr>
+  <td>Intel Speed Shift Technology</td>
+  <td>Disabled</td>
+  <td>Source says &quot;Speed Shit.&quot; Disabling Speed Shift prevents hardware-directed performance-state selection and may worsen responsiveness or efficiency on supported CPUs.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; Onboard Devices Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>HD Audio Controller</td>
+  <td>Enabled</td>
+  <td>Enables onboard audio.</td>
+</tr>
+<tr>
+  <td>PCIEX4_3</td>
+  <td>X4 Mode</td>
+  <td>Allocates four lanes to the named slot; may share or disable other ports depending on the board.</td>
+</tr>
+<tr>
+  <td>M.2_1 Configuration</td>
+  <td>Auto</td>
+  <td>Lets firmware select the mode for the first M.2 slot.</td>
+</tr>
+<tr>
+  <td>M.2_2 PCIe Bandwidth Configuration</td>
+  <td>X4</td>
+  <td>Allocates four PCIe lanes to the second M.2 slot; board-specific lane sharing applies.</td>
+</tr>
+<tr>
+  <td>ASMedia Back USB 3.1 Controller</td>
+  <td>Disabled</td>
+  <td>Disables rear ports attached to that controller.</td>
+</tr>
+<tr>
+  <td>ASMedia Front USB 3.1 Controller</td>
+  <td>Disabled</td>
+  <td>Disables front-panel ports attached to that controller.</td>
+</tr>
+<tr>
+  <td>RGB when working</td>
+  <td>Off</td>
+  <td>Turns board lighting off while running.</td>
+</tr>
+<tr>
+  <td>RGB during sleep, hibernate, or soft off</td>
+  <td>Off</td>
+  <td>Turns board lighting off in low-power/off states.</td>
+</tr>
+<tr>
+  <td>Intel LAN Controller</td>
+  <td>Enabled</td>
+  <td>Enables onboard Intel Ethernet.</td>
+</tr>
+<tr>
+  <td>Intel LAN PXE Option ROM</td>
+  <td>Disabled</td>
+  <td>Disables network boot ROM. Normal local networking remains available.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; PCH Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>IOAPIC 24-119 Entries</td>
+  <td>Disabled</td>
+  <td>Restricts extended I/O APIC entries. This can impair modern PCIe device interrupt routing or compatibility. Leave at firmware default unless a specific legacy requirement exists.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; PCH Configuration &gt; PCI Express Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>PCIe Speed</td>
+  <td>Gen3</td>
+  <td>Forces Gen3 instead of automatic or newer generations. May improve stability on an older platform but caps capable devices.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; Platform Misc Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>PCI Express Native Power Management</td>
+  <td>Disabled</td>
+  <td>Disables OS-native PCIe power management.</td>
+</tr>
+<tr>
+  <td>PCH DMI ASPM</td>
+  <td>Disabled</td>
+  <td>Disables Active State Power Management on the chipset link.</td>
+</tr>
+<tr>
+  <td>ASPM</td>
+  <td>Disabled</td>
+  <td>Disables PCIe link power-saving states globally or for the selected scope.</td>
+</tr>
+<tr>
+  <td>DMI Link ASPM Control</td>
+  <td>Disabled</td>
+  <td>Disables DMI link power saving.</td>
+</tr>
+<tr>
+  <td>PEG ASPM</td>
+  <td>Disabled</td>
+  <td>Disables ASPM for PCIe graphics. These settings increase idle power and can increase temperature.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; ROG Effects</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Onboard LED</td>
+  <td>Enabled</td>
+  <td>Enables board status lighting.</td>
+</tr>
+<tr>
+  <td>Q-Code LED Function</td>
+  <td>POST Code Only</td>
+  <td>Displays diagnostic POST codes during startup rather than another runtime value.</td>
+</tr>
+</tbody>
+</table>
+<h2>Advanced &gt; System Agent Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>VT-d</td>
+  <td>Disabled</td>
+  <td>Disables I/O virtualization and DMA remapping. Device passthrough and some Windows hardware-security protections may not work.</td>
+</tr>
+</tbody>
+</table>
+<h2>Graphics Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Primary Display</td>
+  <td>Auto</td>
+  <td>Lets firmware select the initial graphics device.</td>
+</tr>
+<tr>
+  <td>iGPU Multi-Monitor</td>
+  <td>Disabled</td>
+  <td>Disables keeping the integrated GPU active alongside a discrete GPU for additional displays/features.</td>
+</tr>
+</tbody>
+</table>
+<h2>DMI/OPI Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>DMI Max Link Speed</td>
+  <td>Gen3</td>
+  <td>Forces or caps the CPU-chipset link at Gen3 on the source platform.</td>
+</tr>
+</tbody>
+</table>
+<h2>PEG Port Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>PCIEX16/X8_1 Link Speed</td>
+  <td>Gen3</td>
+  <td>Forces the first graphics slot link to Gen3.</td>
+</tr>
+<tr>
+  <td>PCIEX8_2 Link Speed</td>
+  <td>Gen3</td>
+  <td>Forces the second graphics slot link to Gen3.</td>
+</tr>
+<tr>
+  <td>PCIe Spread Spectrum Clocking</td>
+  <td>Disabled</td>
+  <td>Disables small clock modulation used to reduce electromagnetic interference. Can increase EMI.</td>
+</tr>
+</tbody>
+</table>
+<h2>Boot</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Fast Boot</td>
+  <td>Disabled</td>
+  <td>Performs a more complete boot initialization. Firmware boot may take longer.</td>
+</tr>
+<tr>
+  <td>Above 4G Decoding</td>
+  <td>Disabled</td>
+  <td>Disables allocation of PCIe MMIO above 4 GiB. This can prevent Resizable BAR, large multi-device configurations, and some modern GPU/device layouts.</td>
+</tr>
+<tr>
+  <td>CSM</td>
+  <td>Disabled</td>
+  <td>Uses UEFI-only boot. Appropriate for modern Windows when the OS disk uses GPT and devices have UEFI support. Verify before changing on an existing installation.</td>
+</tr>
+</tbody>
+</table>
+<h2>Boot &gt; Boot Configuration</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Boot Logo Display</td>
+  <td>Disabled</td>
+  <td>Hides the vendor logo.</td>
+</tr>
+<tr>
+  <td>POST Report</td>
+  <td>5 seconds</td>
+  <td>Displays POST information for five seconds.</td>
+</tr>
+<tr>
+  <td>Boot Up NumLock State</td>
+  <td>Disabled</td>
+  <td>Starts with Num Lock off.</td>
+</tr>
+<tr>
+  <td>Wait for F1 If Error</td>
+  <td>Enabled</td>
+  <td>Stops for acknowledgement when firmware reports an error.</td>
+</tr>
+<tr>
+  <td>Option ROM Messages</td>
+  <td>Enabled</td>
+  <td>Shows expansion-device firmware messages.</td>
+</tr>
+<tr>
+  <td>Interrupt 19 Capture</td>
+  <td>Disabled</td>
+  <td>Prevents add-in option ROMs from capturing the legacy boot interrupt.</td>
+</tr>
+<tr>
+  <td>Setup Mode</td>
+  <td>EZ Mode</td>
+  <td>Personal interface preference; no runtime performance effect.</td>
+</tr>
+</tbody>
+</table>
+<h2>Extreme Tweaker</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>XMP profile</td>
+  <td>Set your profile</td>
+  <td>Applies memory vendor timings/voltage beyond base JEDEC settings. This is overclocking and requires stability testing.</td>
+</tr>
+<tr>
+  <td>MultiCore Enhancement</td>
+  <td>Auto</td>
+  <td>Lets ASUS firmware decide whether to apply vendor multi-core turbo behavior. Exact limits depend on BIOS and CPU generation.</td>
+</tr>
+<tr>
+  <td>SVID Behavior</td>
+  <td>Best-Case Scenario</td>
+  <td>Uses an optimistic voltage/current behavior preset. Can reduce requested voltage but may cause instability on a CPU that needs more voltage.</td>
+</tr>
+<tr>
+  <td>AVX ICRN Offset</td>
+  <td>Auto</td>
+  <td>Source spelling retained; likely an AVX ratio-offset control. Automatic firmware behavior.</td>
+</tr>
+<tr>
+  <td>CPU Core Ratio</td>
+  <td>Auto</td>
+  <td>Leaves CPU ratios under automatic firmware control.</td>
+</tr>
+<tr>
+  <td>DRAM Odd Ratio Mode</td>
+  <td>Enabled</td>
+  <td>Allows odd memory ratio steps where supported.</td>
+</tr>
+<tr>
+  <td>Xtreme Tweaking</td>
+  <td>Disabled</td>
+  <td>Disables ASUS's specialized benchmark-oriented mode.</td>
+</tr>
+<tr>
+  <td>TPU</td>
+  <td>Keep Current Settings</td>
+  <td>Does not apply a new TPU automatic tuning profile.</td>
+</tr>
+<tr>
+  <td>CPU SVID Support</td>
+  <td>Auto</td>
+  <td>Leaves CPU voltage-identification signaling under firmware control.</td>
+</tr>
+</tbody>
+</table>
+<h2>Tools</h2>
+<table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Source value</th>
+  <th>Effect and caution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Setup Animator</td>
+  <td>Disabled</td>
+  <td>Disables BIOS interface animations.</td>
+</tr>
+<tr>
+  <td>Armoury Crate</td>
+  <td>Disabled</td>
+  <td>Prevents firmware-assisted Armoury Crate installation/integration where supported.</td>
+</tr>
+</tbody>
+</table>
+<h2>Recommended security corrections</h2>
+<p>For a current Windows 11 baseline, keep Execute Disable Bit enabled. Enable Intel Virtualization Technology and VT-d when using Hyper-V, WSL 2, Windows Sandbox, virtualization-based security, Memory Integrity, Credential Guard, device passthrough, or DMA remapping. Treat C-state, ASPM, SpeedStep, Speed Shift, Gen3 forcing, IOAPIC, and Above 4G settings as machine-specific experiments rather than latency axioms.</p>
+<p>The source page displays a content update date of 4 September 2026 and the donation addresses reproduced in the repository README.</p>
+</div></main>
+<footer><div class="footer-inner">Windows Toolkit · Static GitHub Pages site · MIT applies only within the scope stated in LICENSING.md.</div></footer>
+</body></html>

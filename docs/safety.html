@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Safety · udp legacy</title>
+<meta name="description" content="udp legacy Windows Toolkit">
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="assets/site.js"></script>
+</head><body>
+<header><nav class="nav"><a class="brand" href="index.html">udp <span>legacy</span></a><a class="" href="index.html">Overview</a><a class="" href="toolbox.html">Toolbox</a><a class="" href="network.html">Network</a><a class="" href="nvidia.html">NVIDIA</a><a class="" href="cleanup.html">Cleanup</a><a class="" href="bios.html">BIOS</a><a class="" href="legacy.html">Legacy</a><a class="" href="files.html">Files</a><a class="active" href="safety.html">Safety</a></nav></header>
+<main><section class="hero"><div class="kicker">Before applying changes</div><h1>Safety, audit and licensing</h1>
+<p>Risk ratings describe likely system impact, not malware status. Read the matching entry before importing Registry files or running elevated scripts.</p></section><div class="markdown"><h1>Safety notes and source corrections</h1>
+<h2>Classification</h2>
+<table>
+<thead>
+<tr>
+  <th>Topic</th>
+  <th>Status</th>
+  <th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Chocolatey package installation</td>
+  <td>Maintained with review required</td>
+  <td>Large third-party package set; package names and licenses vary.</td>
+</tr>
+<tr>
+  <td>MTU configuration</td>
+  <td>Maintained</td>
+  <td>Narrow and reversible when applied to the correct interface.</td>
+</tr>
+<tr>
+  <td>Memory cleaner</td>
+  <td>Legacy only</td>
+  <td>Misidentifies cache as free memory and calls an undocumented/nonexistent WMI method through obsolete WMIC.</td>
+</tr>
+<tr>
+  <td>Restore points</td>
+  <td>Replaced</td>
+  <td>Source destroys all shadow copies first.</td>
+</tr>
+<tr>
+  <td>OpenShell profile</td>
+  <td>Preserved configuration</td>
+  <td>Application-specific and reversible through OpenShell settings.</td>
+</tr>
+<tr>
+  <td>Microphone-volume lock</td>
+  <td>Documentation only</td>
+  <td>Requires an external executable and persistent volume override.</td>
+</tr>
+<tr>
+  <td>NVIDIA DLL relocation</td>
+  <td>Legacy only</td>
+  <td>Breaks NVAPI consumers and tampers with a driver-installed system DLL.</td>
+</tr>
+<tr>
+  <td>Driver removal</td>
+  <td>Documentation only</td>
+  <td>Source supplies no exact removal steps or package identity.</td>
+</tr>
+<tr>
+  <td>Event-log export</td>
+  <td>Maintained</td>
+  <td>Read-only collection with bounded time range.</td>
+</tr>
+<tr>
+  <td>Specific KB blocking</td>
+  <td>Legacy only</td>
+  <td>Deletes update cache, modifies repository trust, installs a module, and makes time-sensitive claims.</td>
+</tr>
+<tr>
+  <td>Energy-mode registry change</td>
+  <td>Experimental</td>
+  <td>Insufficient reproduction/build scope; includes rollback.</td>
+</tr>
+<tr>
+  <td>BitLocker TPM plus PIN</td>
+  <td>Corrected documentation</td>
+  <td>High-value security configuration; protector deletion must remain deliberate and manual.</td>
+</tr>
+<tr>
+  <td>Feature-release target</td>
+  <td>Maintained</td>
+  <td>Corrected naming and complete policy values; reversible.</td>
+</tr>
+<tr>
+  <td>BIOS profile</td>
+  <td>Annotated reference</td>
+  <td>Hardware-specific and contains several security/compatibility regressions.</td>
+</tr>
+</tbody>
+</table>
+<h2>Material corrections</h2>
+<ul>
+<li>The documented BitLocker protector switch is <code>-TPMAndPIN</code>, not <code>-TPM and PIN</code>.</li>
+<li><code>TargetReleaseVersion</code> pins a Windows feature release. It does not disable edition upgrades between Home, Pro, Enterprise, and Education.</li>
+<li>Current Microsoft documentation says ProductVersion must be configured with TargetReleaseVersion.</li>
+<li><code>Cache Bytes</code> is cached data, not free memory.</li>
+<li>The WMI performance counter class used by the memory loop does not provide the claimed standby-list-clearing method.</li>
+<li>Deleting all VSS shadows before creating a checkpoint is destructive and unnecessary.</li>
+<li>A generic MTU of 1492 is appropriate for some PPPoE paths, not all Ethernet connections.</li>
+<li>Moving <code>nvapi64.dll</code> affects every NVAPI-dependent application, not only one version check.</li>
+<li>Hiding a KB is not inherently permanent because updates can be revised or superseded.</li>
+<li>Disabling Execute Disable Bit disables the processor support Windows uses for hardware-enforced DEP.</li>
+<li>Disabling VT-x and VT-d is incompatible with several Windows virtualization and security capabilities.</li>
+</ul>
+<h2>Validation boundary</h2>
+<p>The two source pages were fully read as rendered text on 7 September 2026. The repository does not include the third-party microphone utility archive or recreate the embedded driver-history screenshot. No firmware values were applied and no Windows-modifying script was executed in the build environment.</p>
+</div><hr><div class="markdown"><h1>Safety and correctness audit</h1>
+<p>Audit date: 7 September 2026.</p>
+<h2>Result</h2>
+<p>The original collection should not be published as a current Windows optimization pack. It mixes cosmetic changes with system-wide security reductions, unsupported version-specific service profiles, machine-specific registry paths, contradictory commands, and irreversible operations. No malware payload or embedded credential was found in the supplied files. That statement is based on source inspection, not execution or antivirus analysis.</p>
+<h2>Critical findings</h2>
+<table>
+<thead>
+<tr>
+  <th>Finding</th>
+  <th>Source</th>
+  <th>Actual consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Security controls disabled together</td>
+  <td><code>Windows 10 All-in-One.bat</code>, <code>Windows 1709 - BTM.reg</code>, several files under <code>Files [OLD]</code></td>
+  <td>Disables or damages Defender, SmartScreen, Security Center, Firewall, Windows Update, UAC, DEP configuration, or CPU vulnerability mitigations. This increases compromise risk.</td>
+</tr>
+<tr>
+  <td>Core services broadly disabled</td>
+  <td><code>Windows 10 1909.ps1</code>, <code>Windows 10 2004.ps1</code>, <code>Windows 1709 - RIPPER.reg</code>, service <code>.reg</code> files</td>
+  <td>Any service not explicitly allowlisted may be disabled, including hardware, networking, installation, security, backup, Store, and third-party services. The result depends on the exact machine.</td>
+</tr>
+<tr>
+  <td>Recovery data deleted</td>
+  <td><code>Windows Restore Point.bat</code></td>
+  <td><code>vssadmin delete shadows /all /quiet</code> deletes all Volume Shadow Copy snapshots before attempting to make one restore point. If creation fails, recovery is worse than before.</td>
+</tr>
+<tr>
+  <td>Fake update servers configured</td>
+  <td><code>Windows 1709 - BTM.reg</code>, <code>Files [OLD]/Disable Windows Update.reg</code>, general-tweak instructions</td>
+  <td>Enables WSUS policy while pointing at non-Microsoft placeholder or offensive URLs, preventing normal update discovery and leaving stale policy behind.</td>
+</tr>
+<tr>
+  <td>OS executables renamed</td>
+  <td><code>Disable Extras.bat</code></td>
+  <td>Renames SmartScreen, RuntimeBroker, SearchUI, StartMenuExperienceHost, ShellExperienceHost, and other protected binaries. This can break sign-in, shell, search, app isolation, servicing, and system-file integrity.</td>
+</tr>
+<tr>
+  <td>Security mitigation disabled</td>
+  <td><code>BCD Edit.cmd</code>, <code>Windows 7 - Allrounder.bat</code>, <code>Disable Spectre Meltdown.reg</code></td>
+  <td>Uses <code>nx optout</code> or <code>AlwaysOff</code> and registry flags that disable speculative-execution mitigations. The expected performance benefit is unproven and hardware/workload dependent.</td>
+</tr>
+</tbody>
+</table>
+<h2>Correctness defects</h2>
+<h3><code>Windows 10 2004.ps1</code></h3>
+<p>The script first assigns selected services to Automatic or Manual. It then sets every service outside those lists to Automatic and immediately loops over the same set again to set it to Disabled. The first bulk loop has no lasting purpose. The final result is a small allowlist plus every other discoverable service disabled.</p>
+<h3><code>RAM SplitThreshold.bat</code></h3>
+<p>The 16 GB and 32 GB values are expressed in KiB as 16,777,216 and 33,554,432. The 4 GB and 8 GB branches use 68,689,924 and 137,779,208, approximately 64 GB and 128 GB rather than 4 GB and 8 GB. All branches write <code>ControlSet001</code> instead of the active <code>CurrentControlSet</code>, so behavior can also differ across boot configurations.</p>
+<h3><code>Windows Restore Point.bat</code></h3>
+<p>The script checks <code>%errorlevel%</code> after <code>wmic ... Call CreateRestorePoint</code>. That value indicates whether WMIC launched successfully, not necessarily whether the WMI method returned a successful restore-point result. It also waits five minutes after destroying all existing snapshots for no demonstrated reason.</p>
+<h3><code>block_KB5063878.ps1</code></h3>
+<p>The filename names one KB, but the array targets two. It permanently changes PSGallery trust to <code>Trusted</code>, installs a third-party module globally if absent, deletes the Windows Update download cache, and does not restore the prior repository trust policy. Hiding a superseded KB is not a durable update-management strategy.</p>
+<h3><code>firewall_toggle_registry.bat</code></h3>
+<p>Unquoted input comparisons such as <code>if %choice%==1</code> can produce malformed commands on empty or special-character input. It writes implementation registry keys directly instead of using <code>Set-NetFirewallProfile</code>. Turning the firewall off for all profiles is offered as a routine menu action.</p>
+<h3><code>Take Ownership.reg</code> and <code>Get full Admin.bat</code></h3>
+<p>Both add shell commands that recursively replace ownership and grant Full Control. The <code>.reg</code> version grants to SID <code>S-1-3-4</code>, the Owner Rights SID, rather than the Administrators group used by the batch variant. Recursive ACL changes can destroy inherited permissions and Windows servicing assumptions.</p>
+<h3><code>Set PowerMizer to Max Performance.reg</code></h3>
+<p>The key contains one captured display-adapter GUID. It is machine-specific and is not portable to another GPU installation. Applying it elsewhere may do nothing or modify the wrong stale device instance.</p>
+<h2>Unsupported performance claims</h2>
+<p>The original README describes several settings as latency or performance improvements without benchmarks, hardware scope, rollback data, or supported Microsoft guidance. Examples include forced platform timers, disabled dynamic ticks, fixed TCP tuning, disabled prefetch/SysMain, multimedia scheduler registry values, service-host splitting, and mass service changes.</p>
+<p>Microsoft documents <code>useplatformclock</code> and <code>useplatformtick</code> as debugging options. They are not general gaming presets. This rebuild therefore does not reproduce them as maintained tools.</p>
+<h2>Preservation policy</h2>
+<p>All original files are retained in <code>archive/original/</code> without normalization, renaming, or line-ending conversion. They are quarantined by documentation and directory placement rather than modified, so future reviewers can reproduce every finding.</p>
+<h2>Migration decisions</h2>
+<table>
+<thead>
+<tr>
+  <th>Original capability</th>
+  <th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>State inspection</td>
+  <td>Rebuilt as one read-only PowerShell report</td>
+</tr>
+<tr>
+  <td>Restore-point creation</td>
+  <td>Rebuilt without deleting snapshots</td>
+</tr>
+<tr>
+  <td>Hibernation control</td>
+  <td>Rebuilt with explicit enable/disable state and <code>-WhatIf</code></td>
+</tr>
+<tr>
+  <td>Firewall control</td>
+  <td>Rebuilt with supported cmdlets; disabling requires <code>-Force</code></td>
+</tr>
+<tr>
+  <td>Driver-update exclusion</td>
+  <td>Rebuilt as one reversible policy value</td>
+</tr>
+<tr>
+  <td>Defender, SmartScreen, UAC, mitigation, and update shutdown</td>
+  <td>Archive only</td>
+</tr>
+<tr>
+  <td>Broad service profiles</td>
+  <td>Archive only</td>
+</tr>
+<tr>
+  <td>Timer and network presets</td>
+  <td>Archive only pending a measured, machine-specific use case</td>
+</tr>
+<tr>
+  <td>Cosmetic cursor, flyout, Photo Viewer, and context-menu tweaks</td>
+  <td>Archive only because they target obsolete shell behavior or embed broad ACL operations</td>
+</tr>
+</tbody>
+</table>
+</div><hr><div class="markdown"><h1>Licensing scope</h1>
+<p>The repository-level <code>LICENSE</code> is the MIT License.</p>
+<p>It applies to maintained source code, project-authored documentation, tests, workflow files, website source, and configuration material for which the udp legacy project owns the copyright or otherwise has the right to grant the MIT License.</p>
+<h2>Imported toolbox</h2>
+<p>Files under <code>toolbox/</code> and the corresponding mirrors under <code>docs/files/toolbox/</code> were imported from user-supplied archives. Their inclusion does not automatically establish authorship, provenance, or a right to relicense each file.</p>
+<p>Unless an imported file is separately identified as project-owned and MIT-licensed, treat its original rights status as unchanged.</p>
+<p>Specific cautions:</p>
+<ul>
+<li><code>toolbox/admin-context/Add Take Ownership to Context menu.reg</code> contains an embedded credit to Walter Glenn / How-To Geek. It is preserved with that attribution and is not relicensed here.</li>
+<li><code>toolbox/nvidia/inspector/inspector.exe</code> is a supplied third-party executable identifying itself as NVIDIA Profile Inspector. The supplied archive does not establish its license. The project MIT license does not relicense the binary.</li>
+<li><code>toolbox/input/Windows_10+8.x_MouseFix_ItemsSize=100%_Scale=1-to-1_@6-of-11.reg</code> has no embedded authorship/license statement in the supplied file. Its provenance should be established before redistribution under any affirmative license claim.</li>
+<li>NVIDIA <code>.nip</code> profiles can contain exported driver configuration and hardware identifiers. Their inclusion does not imply ownership of NVIDIA software or driver setting definitions.</li>
+</ul>
+<h2>Source archives</h2>
+<p><code>source-archives/</code> preserves the four uploaded 7z archives as received. The repository MIT license does not override rights attached to files contained in those archives.</p>
+<h2>Historical archive</h2>
+<p>Files under <code>archive/</code> are preserved historical material. Their presence in this repository does not, by itself, grant new rights or replace any license, copyright notice, or other terms that originally applied to them.</p>
+<p>Unless a historical file is separately identified as project-owned and MIT-licensed, treat it as reference material whose original rights status is unchanged.</p>
+<h2>Third-party software</h2>
+<p><code>packages/chocolatey-packages.txt</code> lists third-party packages but does not redistribute those packages. Each package remains subject to its own license and terms.</p>
+<p>External websites, Microsoft documentation, Chocolatey packages, NVIDIA software, and other linked third-party resources are not covered by this repository's MIT License.</p>
+</div></main>
+<footer><div class="footer-inner">Windows Toolkit · Static GitHub Pages site · MIT applies only within the scope stated in LICENSING.md.</div></footer>
+</body></html>

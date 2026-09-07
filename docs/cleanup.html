@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cleanup · udp legacy</title>
+<meta name="description" content="udp legacy Windows Toolkit">
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="assets/site.js"></script>
+</head><body>
+<header><nav class="nav"><a class="brand" href="index.html">udp <span>legacy</span></a><a class="" href="index.html">Overview</a><a class="" href="toolbox.html">Toolbox</a><a class="" href="network.html">Network</a><a class="" href="nvidia.html">NVIDIA</a><a class="active" href="cleanup.html">Cleanup</a><a class="" href="bios.html">BIOS</a><a class="" href="legacy.html">Legacy</a><a class="" href="files.html">Files</a><a class="" href="safety.html">Safety</a></nav></header>
+<main><section class="hero"><div class="kicker">Documented file collection</div><h1>Cleanup</h1><p>The cleanup utility starts as an audit. Deletion-capable modes are documented separately and require explicit confirmation.</p></section>
+<div class="toolbar"><input id="search" type="search" placeholder="Search files and behavior…"><select id="category"><option value="">All categories</option><option value="Cleanup">Cleanup</option></select><select id="risk"><option value="">All risk levels</option><option value="Medium">Medium</option></select></div>
+<article class="tool" data-tool data-category="Cleanup" data-risk="Medium" data-search="cleanup/Windows-Orphan-Cleanup-Audit.ps1 Orphaned application-data cleanup audit Audits selected application-data directories against installed programs, paths, running processes, services and scheduled tasks, then reports possible orphaned folders. Default execution is read-only. Deletion occurs only with explicit switches. -CleanTempFiles can remove unlocked Temp files; -DeleteConfirmedUnused can delete folders the user explicitly marked unused after a second confirmation. The script intentionally treats every candidate as a review hint rather than proof. GUI mode enables the deletion-capable paths but still requires explicit confirmation. Cleanup Medium">
+<div class="tool-top"><div><h3>Orphaned application-data cleanup audit</h3><div class="path">cleanup/Windows-Orphan-Cleanup-Audit.ps1</div></div><span class="badge Medium">Medium</span></div>
+<p>Audits selected application-data directories against installed programs, paths, running processes, services and scheduled tasks, then reports possible orphaned folders. Default execution is read-only.</p>
+<div class="actions"><a class="button" href="files/toolbox/cleanup/Windows-Orphan-Cleanup-Audit.ps1" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>Deletion occurs only with explicit switches. -CleanTempFiles can remove unlocked Temp files; -DeleteConfirmedUnused can delete folders the user explicitly marked unused after a second confirmation. The script intentionally treats every candidate as a review hint rather than proof. GUI mode enables the deletion-capable paths but still requires explicit confirmation.</p><p><strong>Usage:</strong> Start with the default read-only run. Use -MeasureFolderSizes for sizing and only enable cleanup switches after reviewing generated reports.</p></details>
+</article><article class="tool" data-tool data-category="Cleanup" data-risk="Medium" data-search="cleanup/Start-Windows-Cleanup-GUI.cmd Windows cleanup GUI launcher Checks for elevation, self-elevates when needed and launches Windows-Orphan-Cleanup-Audit.ps1 in STA GUI mode. GUI mode enables folder-size measurement, interactive review, temp cleanup and deletion of explicitly confirmed unused folders. The underlying script still presents separate deletion plans and typed confirmations. Cleanup Medium">
+<div class="tool-top"><div><h3>Windows cleanup GUI launcher</h3><div class="path">cleanup/Start-Windows-Cleanup-GUI.cmd</div></div><span class="badge Medium">Medium</span></div>
+<p>Checks for elevation, self-elevates when needed and launches Windows-Orphan-Cleanup-Audit.ps1 in STA GUI mode.</p>
+<div class="actions"><a class="button" href="files/toolbox/cleanup/Start-Windows-Cleanup-GUI.cmd" download>Download file</a></div>
+<details><summary>Behavior, limitations and usage</summary><p>GUI mode enables folder-size measurement, interactive review, temp cleanup and deletion of explicitly confirmed unused folders. The underlying script still presents separate deletion plans and typed confirmations.</p><p><strong>Usage:</strong> Keep this CMD next to Windows-Orphan-Cleanup-Audit.ps1 and run it when interactive GUI review is wanted.</p></details>
+</article></main>
+<footer><div class="footer-inner">Windows Toolkit · Static GitHub Pages site · MIT applies only within the scope stated in LICENSING.md.</div></footer>
+</body></html>

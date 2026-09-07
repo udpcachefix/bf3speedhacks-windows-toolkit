@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Legacy archive · udp legacy</title>
+<meta name="description" content="udp legacy Windows Toolkit">
+<link rel="stylesheet" href="assets/style.css">
+<script defer src="assets/site.js"></script>
+</head><body>
+<header><nav class="nav"><a class="brand" href="index.html">udp <span>legacy</span></a><a class="" href="index.html">Overview</a><a class="" href="toolbox.html">Toolbox</a><a class="" href="network.html">Network</a><a class="" href="nvidia.html">NVIDIA</a><a class="" href="cleanup.html">Cleanup</a><a class="" href="bios.html">BIOS</a><a class="active" href="legacy.html">Legacy</a><a class="" href="files.html">Files</a><a class="" href="safety.html">Safety</a></nav></header>
+<main><section class="hero"><div class="kicker">Historical reference</div><h1>Legacy archive</h1>
+<p>The original WFiles and Windows Workarounds material is preserved for traceability. High-impact historical tweaks are documented, not promoted as current defaults. Every archived file is also mirrored on the Files page.</p></section>
+<div class="notice danger"><strong>Do not bulk-run the legacy archive.</strong> It contains files that can disable security protections, Windows Update, services, recovery data, firewall profiles, mitigations, or other major system functionality.</div>
+<div class="markdown"><h1>Windows Workarounds</h1>
+<p>This document carries over every topic from the source page and distinguishes the original intent from verified behavior. Commands under <code>legacy/</code> are preserved for inspection, not routine execution.</p>
+<h2>1. Install Chocolatey</h2>
+<h3>Source procedure</h3>
+<p>The page installs Chocolatey by downloading and immediately executing <code>install.ps1</code> with PowerShell execution policy bypassed for the current process. It offers equivalent PowerShell and Command Prompt forms, followed by one large unattended package installation.</p>
+<p>The original bootstrap forms are preserved under <code>legacy/chocolatey/</code>. They execute code fetched from the internet and should be compared with Chocolatey's current official instructions before use.</p>
+<h3>Repository implementation</h3>
+<p>Install Chocolatey using the current <a href="https://chocolatey.org/install">official Chocolatey instructions</a>, inspect <code>packages/chocolatey-packages.txt</code>, then run:</p>
+<pre><code class="language-powershell">.\scripts\Install-ChocolateyPackages.ps1 -WhatIf
+.\scripts\Install-ChocolateyPackages.ps1
+</code></pre>
+<p>The repository does not pipe an unaudited network response directly into <code>iex</code>. The maintained installer verifies that <code>choco.exe</code> exists, ignores blank lines and comments, shows the package set, supports <code>-WhatIf</code>, and checks the exit code.</p>
+<p>The source package list contains browsers, media tools, runtimes, development tools, security utilities, hardware tools, launchers, remote-access software, VPN clients, NVIDIA software, communication clients, and productivity applications. Package availability and names can change; a manifest is not a guarantee that every item still exists or is suitable.</p>
+<h2>2. MTU change</h2>
+<h3>Source procedure</h3>
+<p>The page displays IPv4 subinterfaces and persistently assigns MTU 1492 to an interface literally named <code>Ethernet</code>:</p>
+<pre><code class="language-text">netsh interface ipv4 show subinterface
+netsh interface ipv4 set subinterface &quot;Ethernet&quot; mtu=1492 store=persistent
+</code></pre>
+<h3>Actual behavior</h3>
+<p>MTU is the maximum IP packet size for that interface before fragmentation or path handling. <code>1492</code> commonly accommodates PPPoE overhead, but ordinary Ethernet normally uses <code>1500</code>. A value that is too high can create path-MTU black holes; one that is unnecessarily low adds overhead.</p>
+<h3>Repository implementation</h3>
+<p><code>scripts/Set-NetworkMtu.ps1</code> requires an existing IPv4 interface alias, validates a range of 576 through 9,000 bytes, records the previous MTU, uses <code>Set-NetIPInterface</code>, and reports the final value.</p>
+<h2>3. Memory cleaner</h2>
+<h3>Source procedure</h3>
+<p>The page provides an infinite batch loop. Every ten minutes it reads <code>\Memory\Cache Bytes</code>; if the value exceeds 8 GiB, it calls:</p>
+<pre><code class="language-text">wmic.exe /Namespace:\\root\cimv2 Path Win32_PerfFormattedData_PerfOS_Memory Call EmptyWorkingSet
+</code></pre>
+<p>It suggests running the task hidden as <code>SYSTEM</code> with highest privileges.</p>
+<h3>Actual behavior and status</h3>
+<p><code>Cache Bytes</code> is not free memory. Windows uses standby and file cache memory to improve performance and reclaims it under pressure. The specified WMI performance-data class exposes counters, not a documented <code>EmptyWorkingSet</code> method. WMIC is deprecated/removed on newer systems. The example is therefore preserved as <code>legacy/memory/MemoryCleaner.bat</code> and not presented as a functional maintained tool.</p>
+<p>The page separately mentions EmptyStandbyList/ISLC-style tools. Those third-party executables are not included.</p>
+<h2>4. Automated restore points</h2>
+<h3>Source procedure</h3>
+<p>The original batch file deletes all shadow copies with <code>vssadmin delete shadows /all /quiet</code>, then invokes the WMI SystemRestore method. The page recommends scheduling it daily as <code>SYSTEM</code>.</p>
+<h3>Actual behavior and replacement</h3>
+<p>Deleting all snapshots destroys existing restore points and potentially other VSS-dependent recovery data before replacement succeeds. <code>scripts/New-SystemRestorePoint.ps1</code> calls the supported <code>Checkpoint-Computer</code> cmdlet without deleting anything. Starting with Windows 8, PowerShell normally refuses to create more than one restore point inside 24 hours.</p>
+<p>The source version remains at <code>legacy/restore/AutomatedRestorePoints.bat</code>.</p>
+<h2>5. OpenShell settings</h2>
+<p><code>configs/OpenShell-StartMenu.xml</code> preserves the complete <code>StartMenu</code> configuration for OpenShell 4.4.142 shown on the page. Major effects:</p>
+<ul>
+<li>Selects one-column Classic style and maps the Windows key to the Classic menu.</li>
+<li>Hides Documents, user folders, recent programs, jump lists, web search, update checks, menu shadow, and glass effects.</li>
+<li>Uses the Classic Skin without a user image or user name.</li>
+<li>Opens directly to the desktop instead of the Start screen.</li>
+<li>Adds short custom entries for Services, Device Manager, Registry Editor, Task Scheduler, Command Prompt, and PowerShell.</li>
+<li>Keeps Computer, Control Panel, PC Settings, Run, shutdown controls, and a search box.</li>
+</ul>
+<p>The custom labels <code>SERV</code>, <code>DM</code>, <code>REG</code>, <code>TS</code>, <code>CMD</code>, and <code>PS</code> and absolute Windows paths are intentional carryovers.</p>
+<h2>6. Disable automatic microphone volume gain</h2>
+<h3>Source procedure</h3>
+<p>The page links to an archive containing <code>hide_cmd_window2.vbs</code>, <code>lock_mic_vol.bat</code>, <code>start_lock_mic_vol.bat</code>, and <code>nircmdc.exe</code>. It says to place files in <code>C:\Windows</code>, set an audio endpoint scalar where <code>65536</code> represents 100 percent and <code>32768</code> represents 50 percent, then optionally start the lock script from the all-users Startup folder.</p>
+<p>Source links:</p>
+<ul>
+<li><a href="https://sethioz.com/forum/download/file.php?id=1527">Referenced download</a></li>
+<li><a href="https://www.reddit.com/r/Windows10/comments/prxl6d/microphone_volume_keeps_auto_adjusting">Referenced Reddit discussion</a></li>
+</ul>
+<h3>Status</h3>
+<p>The archive is third-party binary content and is not mirrored here. Copying utilities into <code>C:\Windows</code> and continuously overriding endpoint volume is intrusive. The source URL included a session-like <code>sid</code> parameter; this repository deliberately omits that parameter. Prefer disabling automatic gain control in the responsible application or using a reviewed per-device solution.</p>
+<h2>7. NVIDIA driver-version-check bypass</h2>
+<h3>Source procedure</h3>
+<p>The page moves <code>%windir%\System32\nvapi64.dll</code> to the desktop to prevent an application from detecting the installed NVIDIA driver version, then provides a reverse move. It explicitly notes that OBS will stop working without the DLL.</p>
+<h3>Actual behavior and status</h3>
+<p><code>nvapi64.dll</code> is NVIDIA's 64-bit NVAPI library. Removing it from System32 can break every application relying on NVAPI, not only the version check. Windows or driver servicing may restore or replace it. The two examples are preserved under <code>legacy/nvidia/</code> with safer collision checks and <code>-WhatIf</code>, but remain unsupported workarounds.</p>
+<h2>8. Remove drivers installed by Windows Update</h2>
+<p>The source section contains only an image showing how to identify drivers in the Windows Update history; it provides no removal command or selection criteria. The repository does not invent a removal procedure. Use Settings, Device Manager's driver rollback where available, <code>pnputil /enum-drivers</code>, or vendor-supported cleanup only after identifying the exact package.</p>
+<p>The embedded image remains visible on the <a href="https://project.bf3speedhacks.com/home/windows-workarounds">source page</a>.</p>
+<h2>9. Debugging made easy</h2>
+<p>The page provides two independent examples:</p>
+<ol>
+<li><code>Get-EventLog -LogName Application -EntryType Error, Warning</code>, formatted into <code>Downloads\eventlog_errors.txt</code>.</li>
+<li><code>Get-WinEvent -FilterHashTable @{LogName='System'; Level=1}</code>, formatted into <code>Downloads\eventlog_critical_errors.txt</code>.</li>
+</ol>
+<p>The first uses the older <code>Get-EventLog</code> cmdlet and queries all matching Application entries without a time limit. The second catches every error, then reports &quot;no critical errors,&quot; which can hide access, API, or I/O failures.</p>
+<p><code>scripts/Export-WindowsEvents.ps1</code> uses <code>Get-WinEvent</code> for both logs, defaults to the previous 24 hours, distinguishes an empty result from a query failure, validates the output directory, and writes UTF-8.</p>
+<h2>10. Block Windows updates KB5063878 and KB5062660</h2>
+<p>The page's script:</p>
+<ol>
+<li>Stops <code>wuauserv</code> and BITS.</li>
+<li>recursively deletes <code>C:\Windows\SoftwareDistribution\Download</code> contents.</li>
+<li>Restarts the services.</li>
+<li>Changes PSGallery to <code>Trusted</code> and installs the third-party <code>PSWindowsUpdate</code> module if needed.</li>
+<li>Hides <code>KB5063878</code> and <code>KB5062660</code> and enumerates hidden updates.</li>
+</ol>
+<p>The page describes the block as permanent and reliable. That is too strong: update metadata, supersedence, servicing-stack behavior, module compatibility, and organizational policy can change. The script also does not restore PSGallery's previous trust state. It is preserved under <code>legacy/updates/Block-SpecificUpdates.ps1</code> and is not part of the maintained toolset.</p>
+<h2>11. Windows 11 Enterprise energy-profile workaround</h2>
+<p>The page reports that, after startup, the UI can show High Performance while another energy mode remains internally selected. Its proposed sequence is:</p>
+<pre><code class="language-text">powercfg /setactive SCHEME_MIN
+</code></pre>
+<p>plus two registry values under <code>HKLM\SYSTEM\CurrentControlSet\Control\Power\EnergyMode</code>, both set to zero.</p>
+<p>The repository carries this under <code>experimental/power/</code> because no affected build, reproduction procedure, measurements, or Microsoft reference is supplied. <code>Apply-EnergyModeWorkaround.reg</code> reproduces the values, <code>Restore-EnergyModeDefaults.reg</code> deletes them, and <code>Set-HighPerformance.cmd</code> activates the built-in High Performance alias.</p>
+<h2>12. Windows 11 TPM and BitLocker startup PIN</h2>
+<p>The page explains how to:</p>
+<ol>
+<li>Confirm a 48-digit Numerical Password recovery protector.</li>
+<li>Confirm full encryption and protection status.</li>
+<li>Enable &quot;Require additional authentication at startup&quot; in Group Policy.</li>
+<li>Require a startup PIN with TPM and apply policy.</li>
+<li>Add a TPM-and-PIN protector.</li>
+<li>Verify and remove a separate TPM-only protector if present.</li>
+<li>Fully shut down and test preboot PIN entry.</li>
+<li>Verify UEFI and Secure Boot in <code>msinfo32</code>.</li>
+<li>Change the PIN later.</li>
+<li>Understand the protection and remaining physical-access limits.</li>
+</ol>
+<p>The site's command <code>manage-bde -protectors -add C: -TPM and PIN</code> is malformed. The documented switch is <code>-TPMAndPIN</code>. The corrected full procedure is in <code>docs/BITLOCKER_TPM_PIN.md</code>.</p>
+<h2>13. Enable BitLocker with TPM and a startup PIN</h2>
+<p>This is the heading used inside the preceding BitLocker section rather than a separate implementation. The goal is to prevent offline modification of the encrypted Windows partition, including replacement of accessibility executables to obtain a pre-login command prompt.</p>
+<p>TPM plus PIN does not prevent disk destruction, hardware replacement, an already-unlocked session from being used, physical keylogging, or someone observing the PIN. The recovery password must remain available outside the encrypted machine.</p>
+<h2>14. &quot;Disable Windows 11 Edition Upgrade&quot;</h2>
+<h3>Source procedure</h3>
+<p>The script creates <code>HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate</code>, sets <code>TargetReleaseVersion=1</code>, copies the current <code>DisplayVersion</code> into <code>TargetReleaseVersionInfo</code>, and restarts <code>wuauserv</code>.</p>
+<h3>Actual behavior and replacement</h3>
+<p>This targets a feature release, not a Windows edition. It can keep the device on a release until that release reaches end of service or policy changes. Current Microsoft policy documentation also requires the product version to be specified. <code>scripts/Set-WindowsFeatureTarget.ps1</code> therefore sets:</p>
+<ul>
+<li><code>ProductVersion=&quot;Windows 11&quot;</code></li>
+<li><code>TargetReleaseVersion=1</code></li>
+<li><code>TargetReleaseVersionInfo=&lt;current DisplayVersion&gt;</code></li>
+</ul>
+<p><code>-Mode Remove</code> deletes all three local values. Domain or MDM policy may still apply. Pinning an unsupported release is not a substitute for security updates.</p>
+<h2>Source-page metadata</h2>
+<p>The Windows Workarounds page displays a content update date of 4 September 2026 and the donation addresses reproduced in the repository README.</p>
+<hr><h1>Script reference</h1>
+<p>This reference describes behavior observed in the supplied source. &quot;Risk&quot; rates the likely effect of executing a file on a current Windows installation, not whether the file contains malware.</p>
+<h2>Risk scale</h2>
+<table>
+<thead>
+<tr>
+  <th>Level</th>
+  <th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Read-only</td>
+  <td>Queries state and writes no system setting</td>
+</tr>
+<tr>
+  <td>Low</td>
+  <td>Narrow, reversible feature change</td>
+</tr>
+<tr>
+  <td>Medium</td>
+  <td>Administrative or compatibility-sensitive change</td>
+</tr>
+<tr>
+  <td>High</td>
+  <td>Can remove protection, updates, recovery data, permissions, or major functionality</td>
+</tr>
+<tr>
+  <td>Critical</td>
+  <td>Combines many high-impact changes or broadly rewrites services</td>
+</tr>
+</tbody>
+</table>
+<h2>Maintained scripts</h2>
+<h3><code>scripts/Get-WindowsTweakState.ps1</code></h3>
+<p>Read-only. Reports OS identity, elevation, firewall profiles, hibernation availability, the driver-update exclusion policy, selected BCD values, restore points, and selected service states. Individual unsupported queries are captured as warnings instead of terminating the report.</p>
+<h3><code>scripts/New-SystemRestorePoint.ps1</code></h3>
+<p>Low risk. Requires elevation, confirms System Restore support, and calls <code>Checkpoint-Computer</code> with a caller-supplied description. It does not delete existing restore points.</p>
+<h3><code>scripts/Set-Hibernation.ps1</code></h3>
+<p>Medium risk. Requires elevation and runs <code>powercfg.exe /hibernate on</code> or <code>off</code>. Supports <code>-WhatIf</code> and confirmation. Disabling hibernation also disables Fast Startup.</p>
+<h3><code>scripts/Set-FirewallProfileState.ps1</code></h3>
+<p>Low risk when enabling; high risk when disabling. Requires elevation and uses <code>Set-NetFirewallProfile</code> for Domain, Private, Public, or all profiles. Disabling requires <code>-Force</code>. Supports <code>-WhatIf</code> and confirmation.</p>
+<h3><code>scripts/Set-DriverUpdatePolicy.ps1</code></h3>
+<p>Medium risk. Requires elevation and creates, sets, or removes the <code>ExcludeWUDriversInQualityUpdate</code> policy value. &quot;Excluded&quot; prevents drivers from being included with Windows quality updates; &quot;Included&quot; removes the local override. Supports <code>-WhatIf</code> and confirmation.</p>
+<h2>Original root files</h2>
+<p>These files are preserved under <code>archive/wfiles-original/</code>.</p>
+<table>
+<thead>
+<tr>
+  <th>File</th>
+  <th>What it actually does</th>
+  <th>Scope and side effects</th>
+  <th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>BCD Edit.cmd</code></td>
+  <td>Deletes the explicit platform-clock selection; disables dynamic tick; forces platform tick; sets boot timeout to two seconds; sets DEP to opt-out; changes boot UI/menu flags; disables Hyper-V launch; disables TPM boot entropy; enables quiet boot; disables hibernation.</td>
+  <td>Boot configuration, virtualization, exploit mitigation, TPM-related boot behavior, and power state. Timer flags are documented for debugging, not as generic tuning. BitLocker may request recovery after BCD changes.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Disable Extras.bat</code></td>
+  <td>Renames eight protected binaries to <code>.old</code> and attempts to kill them: SmartScreen, RuntimeBroker, SearchUI/Cortana, StartMenuExperienceHost, ShellExperienceHost, CompPkgSrv, GameBarPresenceWriter, and <code>upfc.exe</code>.</td>
+  <td>Can break the shell, Start menu, search, app broker, reputation checks, gaming integration, component servicing, and system-file repair. It has no elevation/error handling or rollback.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Disbale Updates.bat</code></td>
+  <td>Stops BITS, Cryptographic Services, MSI Installer, Update Orchestrator, and Windows Update; disables two update services; writes numerous Windows Update, Delivery Optimization, speech, metadata, Store, driver, and upgrade policies.</td>
+  <td>Prevents or disrupts updates, app installation, certificate/catalog processing, Store updates, and drivers. Several policy locations are obsolete or duplicated. Filename contains the original typo.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Get full Admin.bat</code></td>
+  <td>Adds three Explorer context-menu actions for files, executables, and directories. They run <code>takeown</code> and grant the local Administrators group Full Control; directory changes are recursive.</td>
+  <td>Replaces ownership and ACLs. Can damage inherited permissions or servicing expectations. No uninstall counterpart.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>RAM SplitThreshold.bat</code></td>
+  <td>Prompts for 4, 8, 16, or 32 GB and writes <code>SvcHostSplitThresholdInKB</code> under <code>ControlSet001</code>.</td>
+  <td>Alters when services split into separate <code>svchost.exe</code> processes. The 4 and 8 GB values correspond approximately to 64 and 128 GB, so those branches are numerically wrong.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Take Ownership.reg</code></td>
+  <td>Adds &quot;Take Ownership&quot; context-menu commands for files and directories. Runs elevated <code>takeown</code>, then recursively grants Full Control to SID <code>S-1-3-4</code> for directories.</td>
+  <td><code>S-1-3-4</code> is Owner Rights, not the Administrators group. Recursive ACL changes can be difficult to restore.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Windows 10 1909.ps1</code></td>
+  <td>Sets 22 named services to Automatic, nine to Manual, then disables every other service returned by <code>Get-Service</code>.</td>
+  <td>Machine-wide service startup rewrite with no snapshot, compatibility checks, <code>ShouldProcess</code>, or rollback. Third-party services are affected.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Windows 10 2004.ps1</code></td>
+  <td>Sets nine services to Automatic and three to Manual; then sets all other services to Automatic; then immediately disables all those same other services.</td>
+  <td>The first bulk loop is contradicted by the second. Final behavior broadly disables services outside a very small list.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Windows 10 All-in-One.bat</code></td>
+  <td>Combines ownership context menus, deletion/duplication of power plans, fixed TCP globals, update-service shutdown and policies, BCD timer/security changes, hibernation shutdown, SmartScreen/Defender/Security Center disabling, service/key deletions, and a call to external <code>install_wim_tweak</code>.</td>
+  <td>Broad, partly irreversible system mutation. External command is not included. Disables several security and servicing layers simultaneously.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Windows 1709 - BTM.reg</code></td>
+  <td>Applies driver, UAC, sign-in, consumer-feature, maintenance, power, mitigation, scheduler, GameDVR, telemetry, search, OneDrive, lock-screen, SysMain, security, firewall, update, legacy UI, and Photo Viewer changes. It enables WSUS policy with invalid placeholder endpoints.</td>
+  <td>Despite the old README calling it safer, it disables UAC, firewall profiles, Security Center, updates, prefetch, CPU mitigations, and more.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Windows 1709 - RIPPER.reg</code></td>
+  <td>Writes startup values for a large Windows 10 1709-era service list, disabling most and retaining a small set.</td>
+  <td>Removes networking, firewall, event logging, installation, diagnostics, device, encryption, Store, Bluetooth, and other functionality depending on the machine.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Windows Restore Point.bat</code></td>
+  <td>Deletes every VSS shadow copy, waits 300 seconds, then invokes the legacy WMIC SystemRestore method to create one restore point.</td>
+  <td>Destroys existing recovery snapshots before knowing whether replacement succeeds. WMIC is obsolete on current Windows installations.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>block_KB5063878.ps1</code></td>
+  <td>Targets <code>KB5063878</code> and <code>KB5062660</code>; stops update services; recursively clears the download cache; restarts services; trusts PSGallery; installs/imports <code>PSWindowsUpdate</code>; hides matching KBs; lists hidden updates.</td>
+  <td>Deletes cached update payloads, adds a third-party module, changes repository trust persistently, and blocks time-specific updates.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>firewall_toggle_registry.bat</code></td>
+  <td>Menu that writes <code>EnableFirewall</code> directly for Domain, Standard/Private, and Public profiles.</td>
+  <td>Can disable the firewall globally. Empty or special input can break its unquoted <code>if</code> expressions. Uses registry implementation details rather than supported cmdlets.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>README.md</code></td>
+  <td>Describes selected scripts and claims possible performance or latency benefits.</td>
+  <td>Omits many files, rollback instructions, compatibility boundaries, and evidence. Some descriptions understate security and breakage risks.</td>
+  <td>Documentation only</td>
+</tr>
+</tbody>
+</table>
+<h2>Original <code>Files [OLD]</code> files</h2>
+<table>
+<thead>
+<tr>
+  <th>File</th>
+  <th>What it actually does</th>
+  <th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>1709 default servies.reg</code></td>
+  <td>Snapshot of <code>Start</code> values for 162 Windows 10 1709-era services. Importing it overwrites local service startup configuration with another machine/version's defaults.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Backup Services.vbs</code></td>
+  <td>Queries <code>Win32_Service</code>, writes each service startup mode to a dated <code>.reg</code> file on the desktop, then opens it in Notepad. It records only the <code>Start</code> value, not delayed-auto state, triggers, dependencies, failure actions, or per-user service details.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Crosshair Cursor.reg</code></td>
+  <td>Replaces the current user's cursor scheme values and creates a scheme named <code>best</code>, using expanded paths to Windows cursor files.</td>
+  <td>Low</td>
+</tr>
+<tr>
+  <td><code>Disable Automatic Driver Updates.reg</code></td>
+  <td>Prevents device metadata retrieval and excludes drivers from quality updates.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable Driver via Windows Update.reg</code></td>
+  <td>Excludes drivers through three policy/state locations and disables online driver searching.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable Enable Prefetcher.reg</code></td>
+  <td>Sets <code>EnablePrefetcher</code> to zero in both <code>ControlSet001</code> and <code>CurrentControlSet</code>.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable GameDVR.reg</code></td>
+  <td>Changes one per-user fullscreen/GameDVR value and disables GameDVR through two machine policy locations.</td>
+  <td>Low</td>
+</tr>
+<tr>
+  <td><code>Disable Hibernate Enabled.reg</code></td>
+  <td>Sets <code>HibernateEnabled</code> to zero in <code>ControlSet001</code> and <code>CurrentControlSet</code>. It does not use <code>powercfg</code> to manage <code>hiberfil.sys</code>.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable Intel Transactional Synchronization Extensions TSX Default.reg</code></td>
+  <td>Sets kernel <code>DisableTsx=1</code>, disabling Intel TSX where the OS/CPU recognizes the policy.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable Power Throttling.reg</code></td>
+  <td>Sets machine-wide <code>PowerThrottlingOff=1</code>.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable Spectre Meltdown.reg</code></td>
+  <td>Sets <code>FeatureSettingsOverride=3</code> and mask <code>3</code>, disabling Spectre variant 2 and Meltdown mitigations where applicable.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Disable Spyware.reg</code></td>
+  <td>Disables or limits Cortana/web search/location, sets telemetry to Security/zero, hides OneDrive from Explorer, and removes the lock screen. The filename is materially broader than the actual mixed settings.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable Superfetch.reg</code></td>
+  <td>Disables three Superfetch event channels and sets <code>EnableSuperfetch=0</code>.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Disable Windows Security Center + Defender.reg</code></td>
+  <td>Applies obsolete Defender policy, security-provider overrides, and disables SecurityHealthService and <code>wscsvc</code>.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Disable Windows Update.reg</code></td>
+  <td>Disables automatic updates, excludes drivers and MRT, enables WSUS use, and points update URLs at <code>disableupdateserver.com</code>.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Disable Windows Version Upgrade.reg</code></td>
+  <td>Sets four legacy OS-upgrade values to zero.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>GPD Edit Enable.bat</code></td>
+  <td>Finds Group Policy Client package manifests in the component store, writes names to <code>List.txt</code>, and uses DISM to install each package. Commonly intended to expose Group Policy tools on editions where they are not supplied.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Games.reg</code></td>
+  <td>Writes Multimedia System Profile game-task priority, scheduling category, GPU priority, and SFIO priority values.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Network Gaming.reg</code></td>
+  <td>Disables multimedia network throttling and sets system responsiveness to zero.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Network.cmd</code></td>
+  <td>Applies fixed global TCP settings: RSS on, autotuning off, CTCP, ECN off, Initial RTO 2000, RSC off, non-SACK resilience off, two SYN retries, Fast Open/fallback on, HyStart on, and pacing off. ECN is set twice.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>OLD Windows Photo Viewer.reg</code></td>
+  <td>Re-registers the legacy Windows Photo Viewer handlers, icons, drop targets, preview verb, capabilities, and associations for common image formats.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Old Network Symbol.reg</code></td>
+  <td>Sets the legacy network flyout switch <code>ReplaceVan=2</code>.</td>
+  <td>Low</td>
+</tr>
+<tr>
+  <td><code>Old Volume Symbol.reg</code></td>
+  <td>Sets <code>EnableMtcUvc=0</code> to request the legacy volume flyout.</td>
+  <td>Low</td>
+</tr>
+<tr>
+  <td><code>One Drive Remove Quick Access.reg</code></td>
+  <td>Sets the OneDrive CLSID's <code>System.IsPinnedToNameSpaceTree</code> to zero, hiding it from Explorer's navigation pane.</td>
+  <td>Low</td>
+</tr>
+<tr>
+  <td><code>Pause Windows Updates.reg</code></td>
+  <td>Disables Windows Update UI/access and automatic updates, defers feature updates 365 days and quality updates four days, disables restart notices, dual scan, previews, recommended updates, and driver searching.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Power Plan Context Menu.reg</code></td>
+  <td>Adds a desktop context submenu for Power Saver, Balanced, High Performance, Ultimate Performance, and Power Options using fixed built-in GUIDs.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Processor Scheduling.reg</code></td>
+  <td>Writes <code>Win32PrioritySeparation=0x16</code> under <code>ControlSet001</code>.</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td><code>Registry Tweaks (General).reg</code></td>
+  <td>Mixed preset covering driver search, UAC, sign-in, consumer apps, Photo Viewer, scheduler/network values, maintenance, hibernation, power throttling, CPU mitigations, visual effects, GameDVR, OneDrive, lock screen, prefetch/SysMain, and manual instructions for breaking Windows Update.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Remove Quick Access.reg</code></td>
+  <td>Sets Explorer <code>HubMode=1</code>, historically used to hide Quick Access/Home.</td>
+  <td>Low</td>
+</tr>
+<tr>
+  <td><code>Remove Windows Defender.bat</code></td>
+  <td>Disables SmartScreen and Defender reporting, deletes Defender/Security Center service and startup keys, creates an IFEO debugger interception for <code>SecHealthUI.exe</code>, and invokes non-included <code>install_wim_tweak</code>.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>ReviOS U2.1 (final) Service backup.reg</code></td>
+  <td>Snapshot of startup values for 160 services from a ReviOS-tuned machine. It is not a Windows default profile.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Services Disable.reg</code></td>
+  <td>Overwrites startup values for 244 service and driver keys, heavily disabling them.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Services Restore.reg</code></td>
+  <td>Overwrites startup values for the same 244 service and driver keys with a captured profile. &quot;Restore&quot; means restoring that snapshot, not detecting correct defaults for the current Windows build.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Set CTCP.reg</code></td>
+  <td>Writes opaque binary values <code>0200</code> and <code>1700</code> under an NSI registry key to influence TCP behavior. It is not self-documenting or portable.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Set PowerMizer to Max Performance.reg</code></td>
+  <td>Sets four NVIDIA PowerMizer values under one captured display-adapter GUID. The path is machine-specific.</td>
+  <td>High</td>
+</tr>
+<tr>
+  <td><code>Windows 7 - Allrounder.bat</code></td>
+  <td>Large preset that changes DEP/BCD, power plans, TCP/IP and AFD internals, memory, Explorer, NTFS, audio, UAC, dozens of services/drivers, IPv6 transition technologies, and other OS behavior. Some commands conflict, including <code>nx AlwaysOff</code> followed later by <code>nx optout</code>.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Windows 7.reg</code></td>
+  <td>Large mixed registry preset for driver updates, UAC, mitigations, maintenance, power, scheduler, UI, attachments, updates, telemetry, mouse/cursors, time sync, firewall rules, network visibility, sharing, and Windows 10 upgrade blocking. It deletes all configured firewall rules before recreating an empty rules key.</td>
+  <td>Critical</td>
+</tr>
+<tr>
+  <td><code>Windows Cursor.reg</code></td>
+  <td>Replaces the current user's cursor values with system cursor paths and selects a scheme named <code>best</code>.</td>
+  <td>Low</td>
+</tr>
+</tbody>
+</table>
+<h2>Notes on service snapshots</h2>
+<p>Registry <code>Start</code> values conventionally mean: <code>0</code> boot driver, <code>1</code> system driver, <code>2</code> automatic, <code>3</code> manual, and <code>4</code> disabled. A service's correct value depends on Windows build, installed roles, hardware, security configuration, and trigger-start behavior. Importing a captured list is not a valid way to restore another machine.</p>
+<h2>Notes on registry files</h2>
+<p>A <code>.reg</code> import writes exactly the values present but usually does not capture previous values. Deleting the imported keys later is not necessarily a correct rollback because the prior value may have been different rather than absent. A system restore point is useful but is not a substitute for a tested full backup.</p>
+</div></main>
+<footer><div class="footer-inner">Windows Toolkit · Static GitHub Pages site · MIT applies only within the scope stated in LICENSING.md.</div></footer>
+</body></html>
