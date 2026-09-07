@@ -1,0 +1,14 @@
+# Windows and editors
+Thumbs.db
+Desktop.ini
+*.lnk
+.vs/
+.vscode/
+
+# Generated PowerShell/user output
+output/
+*.clixml
+*.transcript.txt
+state-report*.txt
+state-report*.json
+eventlog_*.txt
