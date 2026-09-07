@@ -2,7 +2,7 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlparse, unquote
-import hashlib, sys
+import hashlib, sys, zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "docs"
@@ -56,6 +56,27 @@ for page in SITE.glob("*.html"):
 
 if (SITE/"CNAME").read_text(encoding="utf-8").strip() != "project.bf3speedhacks.com":
     errors.append("CNAME is not project.bf3speedhacks.com")
+
+# Multi-file launchers must be distributed as complete bundles.
+bundles = {
+    "Windows-Cleanup-GUI.zip": {"Start-Windows-Cleanup-GUI.cmd", "Windows-Orphan-Cleanup-Audit.ps1"},
+    "Universal-Network-Reset-MTU1492.zip": {"Run-Universal-Network-Reset-MTU1492.cmd", "Universal-Network-Reset-MTU1492.ps1"},
+    "NVIDIA-Inspector-Toolkit.zip": {"Apply_NVIDIA_Inspector_Settings.cmd", "Revert_NVIDIA_Inspector_Settings_Only.cmd", "NVIDIA_Inspector_Settings.nip", "NVIDIA_Inspector_Default.nip"},
+}
+for bundle_name, required in bundles.items():
+    bundle_path = SITE / "files" / "bundles" / bundle_name
+    if not bundle_path.is_file():
+        errors.append(f"Missing download bundle: {bundle_name}")
+        continue
+    try:
+        with zipfile.ZipFile(bundle_path) as zf:
+            names = set(zf.namelist())
+    except zipfile.BadZipFile:
+        errors.append(f"Invalid ZIP bundle: {bundle_name}")
+        continue
+    missing = required - names
+    if missing:
+        errors.append(f"{bundle_name}: missing bundle members: {', '.join(sorted(missing))}")
 
 if errors:
     print("\n".join("ERROR: "+x for x in errors))
