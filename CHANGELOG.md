@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.3.0 - 2026-09-18
+
+* Added a dedicated website Changelog tab with the five most recent meaningful site updates.
+* Added bilingual English/German changelog content that follows the existing language switch.
+* Added a curated JSON changelog source under `docs/assets/site-changelog.json`.
+* Added CI validation for changelog structure and a guard that flags website changes when the curated changelog is not updated.
+* Added the Changelog to the project overview and navigation.
+
 ## 2.2.0 - 2026-09-18
 
 * Added a live English/German switch across the GitHub Pages website without modifying downloadable scripts or source files.
