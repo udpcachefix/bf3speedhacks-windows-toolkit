@@ -1,0 +1,21 @@
+{
+  "Windows tooling · documentation · historical reference": "Windows Tools · Dokumentation · historische Referenz",
+  "A consolidated Windows tooling repository and GitHub Pages documentation site. Maintained scripts, BIOS references, legacy WFiles, network utilities, cleanup tooling and NVIDIA profiles are kept in one auditable structure.": "Ein gebündeltes Repository für Windows Tools und eine GitHub Pages Dokumentationsseite. Gepflegte Skripte, BIOS Referenzen, ältere WFiles, Netzwerk Werkzeuge, Bereinigungstools und NVIDIA Profile sind in einer nachvollziehbaren Struktur zusammengefasst.",
+  "Several files change machine-wide networking, power, Windows Update, permissions or NVIDIA Base Profile state. Each imported file has a documented behavior and risk rating.": "Mehrere Dateien ändern systemweite Netzwerk, Energie, Windows Update, Berechtigungs oder NVIDIA Base Profile Einstellungen. Für jede importierte Datei sind Verhalten und Risikostufe dokumentiert.",
+  "newly imported toolbox files": "neu importierte Toolbox Dateien",
+  "high-impact toolbox items": "Toolbox Einträge mit hoher Auswirkung",
+  "historical archive files incl. READMEs": "historische Archivdateien inklusive READMEs",
+  "files mirrored for Pages": "für Pages gespiegelte Dateien",
+  "Project areas": "Projektbereiche",
+  "Every file from the four supplied 7z archives, individually documented and downloadable.": "Jede Datei aus den vier bereitgestellten 7z Archiven ist einzeln dokumentiert und direkt herunterladbar.",
+  "RSS affinity, NDU/NetBT changes and the physical-adapter reset with persistent MTU 1492.": "RSS Affinität, NDU und NetBT Änderungen sowie das Zurücksetzen des physischen Netzwerkadapters mit dauerhaft gesetzter MTU 1492.",
+  "Profile Inspector presets, application/revert wrappers and third-party binary hash documentation.": "Profile Inspector Presets, Skripte zum Anwenden und Zurücksetzen sowie Hash Dokumentation für die Drittanbieter Binary.",
+  "Read-only orphan audit by default, with explicit confirmation gates for deletion-capable modes.": "Standardmäßig eine rein lesende Prüfung auf verwaiste Daten, mit ausdrücklicher Bestätigung für Modi, die Dateien löschen können.",
+  "Gaming, input, power, update, UI, permissions and combined system presets.": "Gaming, Eingabe, Energie, Updates, Oberfläche, Berechtigungen und kombinierte System Presets.",
+  "Firmware configuration reference carried over from the original project.": "Firmware Konfigurationsreferenz aus dem ursprünglichen Projekt.",
+  "Original WFiles and Windows Workarounds preserved with behavior and risk analysis.": "Originale WFiles und Windows Workarounds, ergänzt um eine Analyse von Verhalten und Risiken.",
+  "Direct Pages mirror with SHA-256 hashes for every downloadable project/archive item.": "Direkter Pages Spiegel mit SHA 256 Hashes für jede herunterladbare Projekt und Archivdatei.",
+  "Repository policy": "Repository Richtlinie",
+  "The root MIT license applies to project-owned maintained code, documentation, tests and related material. Historical, third-party and provenance-unclear imports are not automatically relicensed. See": "Die MIT Lizenz im Repository Stamm gilt für projekt eigenen gepflegten Code, Dokumentation, Tests und zugehöriges Material. Historische Inhalte, Drittanbieter Dateien und Importe mit unklarer Herkunft werden dadurch nicht automatisch neu lizenziert. Siehe",
+  "Safety, audit and licensing": "Sicherheit, Prüfung und Lizenzierung"
+}
