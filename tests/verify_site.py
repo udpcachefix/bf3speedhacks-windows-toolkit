@@ -112,7 +112,7 @@ for bundle_name, members in expected_bundle_members.items():
 translation_dir = SITE / "assets" / "i18n" / "de"
 required_translation_sets = {
     "common", "index", "toolbox", "files", "cleanup", "network",
-    "nvidia", "bios", "safety", "legacy", "windows", "404",
+    "nvidia", "bios", "safety", "legacy", "windows", "changelog", "404",
 }
 for name in sorted(required_translation_sets):
     path = translation_dir / f"{name}.json"
@@ -138,11 +138,60 @@ for required_js_token in (
     "loadGermanMap",
     "setLanguage",
     "applyTheme",
+    "ensureChangelogNavLink",
+    "hydrateChangelog",
+    "renderChangelog",
 ):
     if required_js_token not in site_js:
         errors.append(f"Missing website switcher implementation in site.js: {required_js_token}")
 if 'html[data-theme="light"]' not in style_css:
     errors.append("Light-theme CSS selector is missing from style.css")
+
+# Curated website changelog must stay concise, bilingual, and machine-checkable.
+site_changelog_path = SITE / "assets" / "site-changelog.json"
+if not site_changelog_path.is_file():
+    errors.append("Missing website changelog data: docs/assets/site-changelog.json")
+else:
+    try:
+        site_changelog = json.loads(site_changelog_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        errors.append(f"Invalid website changelog JSON: {exc}")
+        site_changelog = {}
+    entries = site_changelog.get("entries", []) if isinstance(site_changelog, dict) else []
+    if site_changelog.get("maxEntries") != 5:
+        errors.append("Website changelog maxEntries must be exactly 5")
+    if len(entries) != 5:
+        errors.append(f"Website changelog must contain exactly 5 entries, found {len(entries)}")
+    previous_date = None
+    for index, entry in enumerate(entries, start=1):
+        if not isinstance(entry, dict):
+            errors.append(f"Website changelog entry {index} is not an object")
+            continue
+        date = entry.get("date")
+        version = entry.get("version")
+        if not isinstance(date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date):
+            errors.append(f"Website changelog entry {index} has invalid date")
+        elif previous_date is not None and date > previous_date:
+            errors.append("Website changelog entries are not sorted newest first")
+        previous_date = date if isinstance(date, str) else previous_date
+        if not isinstance(version, str) or not version.strip():
+            errors.append(f"Website changelog entry {index} has no version/label")
+        for language in ("en", "de"):
+            localized = entry.get(language)
+            if not isinstance(localized, dict):
+                errors.append(f"Website changelog entry {index} is missing {language}")
+                continue
+            title = localized.get("title")
+            items = localized.get("items")
+            if not isinstance(title, str) or not title.strip():
+                errors.append(f"Website changelog entry {index} has no {language} title")
+            if not isinstance(items, list) or not (1 <= len(items) <= 5):
+                errors.append(f"Website changelog entry {index} must have 1-5 {language} bullet items")
+            elif any(not isinstance(item, str) or not item.strip() for item in items):
+                errors.append(f"Website changelog entry {index} contains an invalid {language} bullet")
+
+if not (SITE / "changelog.html").is_file():
+    errors.append("Missing changelog.html")
 
 # The private source label must not reappear in the current tree, website, or archive metadata.
 forbidden = bytes((97, 109, 105, 110))
