@@ -17,5 +17,7 @@
   "Direct Pages mirror with SHA-256 hashes for every downloadable project/archive item.": "Direkter Pages Spiegel mit SHA 256 Hashes für jede herunterladbare Projekt und Archivdatei.",
   "Repository policy": "Repository Richtlinie",
   "The root MIT license applies to project-owned maintained code, documentation, tests and related material. Historical, third-party and provenance-unclear imports are not automatically relicensed. See": "Die MIT Lizenz im Repository Stamm gilt für projekt eigenen gepflegten Code, Dokumentation, Tests und zugehöriges Material. Historische Inhalte, Drittanbieter Dateien und Importe mit unklarer Herkunft werden dadurch nicht automatisch neu lizenziert. Siehe",
-  "Safety, audit and licensing": "Sicherheit, Prüfung und Lizenzierung"
+  "Safety, audit and licensing": "Sicherheit, Prüfung und Lizenzierung",
+  "Changelog": "Änderungsverlauf",
+  "The five most recent meaningful website changes, kept concise and bilingual.": "Die fünf neuesten wesentlichen Änderungen an der Website, kompakt und zweisprachig zusammengefasst."
 }
