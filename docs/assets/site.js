@@ -5,7 +5,7 @@ const originalAttrs=new WeakMap();
 const originalTitle=document.title;
 const metaDescription=document.querySelector('meta[name="description"]');
 const originalMetaDescription=metaDescription?.getAttribute('content')||'';
-let languageButton=null, themeButton=null, translationMap={}, loadedGermanMap=null;
+let languageButton=null, themeButton=null, translationMap={}, loadedGermanMap=null, siteChangelogData=null;
 
 function readPreference(key){
  try{return localStorage.getItem(key);}catch{return null;}
@@ -128,7 +128,21 @@ async function setLanguage(language,persist=true){
  }else translationMap={};
  applyTranslations(document.body);
  refreshLocalizedNumbers();
+ renderChangelog();
  filterTools();
+}
+function ensureChangelogNavLink(){
+ const nav=document.querySelector('.nav');
+ if(!nav) return;
+ let link=nav.querySelector('a[href="changelog.html"]');
+ if(!link){
+   link=document.createElement('a');
+   link.href='changelog.html';
+   link.textContent='Changelog';
+   const controls=nav.querySelector('.site-controls');
+   nav.insertBefore(link,controls||null);
+ }
+ link.classList.toggle('active',pageKey()==='changelog');
 }
 function initSiteControls(){
  const nav=document.querySelector('.nav');
@@ -357,6 +371,63 @@ async function hydrateToolbox(){
  }catch(error){host.textContent=currentLanguage==='de'?`Toolbox Referenz konnte nicht geladen werden: ${error.message}`:`Could not load Toolbox reference: ${error.message}`;}
 }
 
+function formatChangelogDate(date){
+ const parsed=new Date(`${date}T00:00:00Z`);
+ if(Number.isNaN(parsed.getTime())) return date;
+ return new Intl.DateTimeFormat(localeName(),{year:'numeric',month:'long',day:'numeric',timeZone:'UTC'}).format(parsed);
+}
+function renderChangelog(){
+ const host=document.getElementById('site-changelog');
+ if(!host||!siteChangelogData?.entries) return;
+ host.replaceChildren();
+ for(const entry of siteChangelogData.entries.slice(0,siteChangelogData.maxEntries||5)){
+   const localized=entry[currentLanguage]||entry.en;
+   if(!localized) continue;
+   const article=document.createElement('article');
+   article.className='change-entry';
+
+   const meta=document.createElement('div');
+   meta.className='change-meta';
+   const time=document.createElement('time');
+   time.dateTime=entry.date;
+   time.textContent=formatChangelogDate(entry.date);
+   meta.appendChild(time);
+   if(entry.version){
+     const version=document.createElement('span');
+     version.className='change-version';
+     version.textContent=t(entry.version);
+     meta.appendChild(version);
+   }
+
+   const title=document.createElement('h2');
+   title.textContent=localized.title;
+   const list=document.createElement('ul');
+   for(const item of localized.items||[]){
+     const li=document.createElement('li');
+     li.textContent=item;
+     list.appendChild(li);
+   }
+
+   article.append(meta,title,list);
+   host.appendChild(article);
+ }
+}
+async function hydrateChangelog(){
+ const host=document.getElementById('site-changelog');
+ if(!host) return;
+ try{
+   const response=await fetch('assets/site-changelog.json',{cache:'no-cache'});
+   if(!response.ok) throw new Error(`HTTP ${response.status}`);
+   siteChangelogData=await response.json();
+   renderChangelog();
+ }catch(error){
+   console.error(error);
+   host.textContent=currentLanguage==='de'
+     ? `Änderungsverlauf konnte nicht geladen werden: ${error.message}`
+     : `Could not load changelog: ${error.message}`;
+ }
+}
+
 async function hydrateFiles(){
  const host=document.getElementById('file-list');
  if(!host) return;
@@ -385,12 +456,14 @@ async function hydrateFiles(){
 }
 
 document.addEventListener('DOMContentLoaded',async()=>{
+ ensureChangelogNavLink();
  initSiteControls();
  await setLanguage(currentLanguage,false);
  ['search','category','risk'].forEach(id=>document.getElementById(id)?.addEventListener('input',filterTools));
  addRelatedBundleDownloads();
- await Promise.all([hydrateToolbox(),hydrateFiles()]);
+ await Promise.all([hydrateToolbox(),hydrateFiles(),hydrateChangelog()]);
  applyTranslations(document.body);
  refreshLocalizedNumbers();
+ renderChangelog();
  filterTools();
 });
