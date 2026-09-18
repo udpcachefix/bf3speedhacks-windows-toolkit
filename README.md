@@ -52,6 +52,9 @@ The site includes:
 
 * a searchable file-by-file Toolbox reference,
 * dedicated Network, NVIDIA, Cleanup, BIOS, Legacy, Safety, and Files pages,
+* a live English/German language switch for the website UI and documentation pages; the initial language follows the browser when no preference has been saved,
+* a light/dark theme switch; the initial theme follows the operating-system preference when no choice has been saved,
+* local persistence of the selected language and theme in the browser,
 * direct copies of maintained tools, imported toolbox files, historical archive files, and the original supplied 7z archives under `docs/files/`,
 * `docs/CNAME` for `project.bf3speedhacks.com`,
 * no external JavaScript or CSS dependencies.
