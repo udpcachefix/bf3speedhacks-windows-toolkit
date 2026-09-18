@@ -1,0 +1,65 @@
+name: Website changelog guard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  changelog-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Require changelog update for website changes
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            base="$PR_BASE_SHA"
+          else
+            base="$PUSH_BEFORE"
+          fi
+
+          if [[ -z "$base" || "$base" =~ ^0+$ ]]; then
+            echo "No comparable base commit; skipping changelog guard."
+            exit 0
+          fi
+
+          changed="$(git diff --name-only "$base" "$GITHUB_SHA")"
+          printf '%s\n' "$changed"
+
+          site_changed=0
+          changelog_changed=0
+
+          while IFS= read -r file; do
+            [[ -z "$file" ]] && continue
+            if [[ "$file" == "docs/assets/site-changelog.json" ]]; then
+              changelog_changed=1
+              continue
+            fi
+            if [[ "$file" == docs/files/* ]]; then
+              continue
+            fi
+            if [[ "$file" == docs/* ]]; then
+              site_changed=1
+            fi
+          done <<< "$changed"
+
+          if [[ "$site_changed" -eq 1 && "$changelog_changed" -ne 1 ]]; then
+            echo "::error::Website files changed without updating docs/assets/site-changelog.json."
+            echo "Add or revise one of the five curated bilingual changelog entries."
+            exit 1
+          fi
+
+          echo "Website changelog guard OK."
