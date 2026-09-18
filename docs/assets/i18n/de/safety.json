@@ -129,5 +129,7 @@
   "Unless a historical file is separately identified as project-owned and MIT-licensed, treat it as reference material whose original rights status is unchanged.": "Sofern eine historische Datei nicht ausdrücklich als Projekteigentum mit MIT Lizenz ausgewiesen ist, ist sie als Referenzmaterial mit unverändertem ursprünglichem Rechtsstatus zu behandeln.",
   "Third-party software": "Drittanbieter Software",
   "lists third-party packages but does not redistribute those packages. Each package remains subject to its own license and terms.": "listet Drittanbieter Pakete auf, verteilt diese Pakete jedoch nicht selbst. Für jedes Paket gelten weiterhin dessen eigene Lizenz und Bedingungen.",
-  "External websites, Microsoft documentation, Chocolatey packages, NVIDIA software, and other linked third-party resources are not covered by this repository's MIT License.": "Externe Websites, Microsoft Dokumentation, Chocolatey Pakete, NVIDIA Software und andere verlinkte Drittanbieter Ressourcen fallen nicht unter die MIT Lizenz dieses Repositorys."
+  "External websites, Microsoft documentation, Chocolatey packages, NVIDIA software, and other linked third-party resources are not covered by this repository's MIT License.": "Externe Websites, Microsoft Dokumentation, Chocolatey Pakete, NVIDIA Software und andere verlinkte Drittanbieter Ressourcen fallen nicht unter die MIT Lizenz dieses Repositorys.",
+  "The documented BitLocker protector switch is": "Der dokumentierte BitLocker Schalter für den Schutz lautet",
+  "The repository-level": "Die Repository Lizenzdatei"
 }
