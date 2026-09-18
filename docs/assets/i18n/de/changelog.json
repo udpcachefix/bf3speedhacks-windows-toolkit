@@ -1,0 +1,10 @@
+{
+  "Changelog · udp legacy": "Änderungsverlauf · udp legacy",
+  "Recent meaningful changes to the udp legacy Windows Toolkit website": "Die letzten wesentlichen Änderungen an der udp legacy Windows Toolkit Website",
+  "Website history": "Website Verlauf",
+  "Changelog": "Änderungsverlauf",
+  "The five most recent meaningful website changes are shown here. Small wording fixes and maintenance-only commits are intentionally grouped instead of being listed separately.": "Hier werden die fünf neuesten wesentlichen Änderungen an der Website angezeigt. Kleine Textkorrekturen und reine Wartungsänderungen werden bewusst zusammengefasst und nicht einzeln aufgeführt.",
+  "How this stays current.": "So bleibt der Verlauf aktuell.",
+  "Website-level changes are checked against this changelog in CI. The entries remain curated so they stay readable, technically accurate and bilingual instead of becoming a raw commit feed.": "Änderungen auf Website Ebene werden in CI gegen diesen Änderungsverlauf geprüft. Die Einträge bleiben bewusst redaktionell zusammengefasst, damit sie verständlich, technisch korrekt und zweisprachig bleiben, statt zu einer rohen Liste einzelner Commits zu werden.",
+  "Loading changelog…": "Änderungsverlauf wird geladen…"
+}
