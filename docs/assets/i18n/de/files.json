@@ -1,0 +1,18 @@
+{
+  "Self-contained mirror of maintained tools, project documentation, configurations, experimental material, historical archives, imported toolbox files and original source archives. Related multi-file tools can be downloaded as one generated ZIP.": "Eigenständiger Spiegel der gepflegten Tools, Projektdokumentation, Konfigurationen, experimentellen Inhalte, historischen Archive, importierten Toolbox Dateien und ursprünglichen Quellarchive. Zusammengehörige Tools mit mehreren Dateien können als automatisch erzeugtes ZIP Paket heruntergeladen werden.",
+  "mirrored files": "gespiegelte Dateien",
+  "bytes total": "Bytes insgesamt",
+  "File / SHA-256": "Datei / SHA 256",
+  "Historical archive file. See Legacy Archive for behavior and risk documentation.": "Historische Archivdatei. Verhalten und Risiken sind im Legacy Archiv dokumentiert.",
+  "Importable application configuration.": "Importierbare Anwendungskonfiguration.",
+  "Experimental or machine-sensitive material. Review before applying.": "Experimentelles oder systemspezifisches Material. Vor dem Anwenden prüfen.",
+  "Repository license.": "Repository Lizenz.",
+  "License scope and third-party material notes.": "Hinweise zum Lizenzumfang und zu Drittanbieter Material.",
+  "Reviewable package manifest used by a maintained installer.": "Prüfbare Paketliste, die von einem gepflegten Installer verwendet wird.",
+  "Project documentation mirrored for direct access.": "Projektdokumentation für direkten Zugriff gespiegelt.",
+  "Repository overview mirrored for direct access.": "Repository Übersicht für direkten Zugriff gespiegelt.",
+  "Maintained PowerShell utility. See project documentation before use.": "Gepflegtes PowerShell Werkzeug. Vor der Verwendung die Projektdokumentation lesen.",
+  "Security policy.": "Sicherheitsrichtlinie.",
+  "Original supplied source archive preserved for provenance.": "Ursprünglich bereitgestelltes Quellarchiv zur Nachvollziehbarkeit unverändert aufbewahrt.",
+  "Imported toolbox file. See Toolbox for behavior, limitations and risk.": "Importierte Toolbox Datei. Verhalten, Einschränkungen und Risiko sind in der Toolbox dokumentiert."
+}
