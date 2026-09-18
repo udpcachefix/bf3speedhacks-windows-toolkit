@@ -257,5 +257,9 @@
   "manual, and": "manuell und",
   "disabled. A service's correct value depends on Windows build, installed roles, hardware, security configuration, and trigger-start behavior. Importing a captured list is not a valid way to restore another machine.": "deaktiviert. Der korrekte Wert eines Dienstes hängt von Windows Build, installierten Rollen, Hardware, Sicherheitskonfiguration und Trigger Start Verhalten ab. Eine erfasste Liste zu importieren ist kein zuverlässiger Weg, ein anderes System wiederherzustellen.",
   "Notes on registry files": "Hinweise zu Registry Dateien",
-  "import writes exactly the values present but usually does not capture previous values. Deleting the imported keys later is not necessarily a correct rollback because the prior value may have been different rather than absent. A system restore point is useful but is not a substitute for a tested full backup.": "Import schreibt exakt die enthaltenen Werte, erfasst vorherige Werte aber normalerweise nicht. Die importierten Schlüssel später zu löschen ist daher nicht zwingend eine korrekte Rücksetzung, weil der vorherige Wert anders statt gar nicht vorhanden gewesen sein kann. Ein Systemwiederherstellungspunkt ist hilfreich, ersetzt aber kein getestetes vollständiges Backup."
+  "import writes exactly the values present but usually does not capture previous values. Deleting the imported keys later is not necessarily a correct rollback because the prior value may have been different rather than absent. A system restore point is useful but is not a substitute for a tested full backup.": "Import schreibt exakt die enthaltenen Werte, erfasst vorherige Werte aber normalerweise nicht. Die importierten Schlüssel später zu löschen ist daher nicht zwingend eine korrekte Rücksetzung, weil der vorherige Wert anders statt gar nicht vorhanden gewesen sein kann. Ein Systemwiederherstellungspunkt ist hilfreich, ersetzt aber kein getestetes vollständiges Backup.",
+  "files": "Dateien",
+  "Sets kernel": "Setzt im Kernel",
+  "and mask": "und die Maske",
+  "Sets Explorer": "Setzt im Explorer"
 }
