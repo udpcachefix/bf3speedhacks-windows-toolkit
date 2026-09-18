@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "maxEntries": 5,
+  "entries": [
+    {
+      "date": "2026-09-18",
+      "version": "2.3.0",
+      "en": {
+        "title": "Website changelog added",
+        "items": [
+          "Added a dedicated Changelog tab that shows the five most recent meaningful website updates.",
+          "Added bilingual English and German changelog entries that follow the website language switch.",
+          "Added automated validation so meaningful website changes are expected to update this changelog as well."
+        ]
+      },
+      "de": {
+        "title": "Website Änderungsverlauf hinzugefügt",
+        "items": [
+          "Ein eigener Reiter „Änderungsverlauf“ zeigt die fünf neuesten wesentlichen Änderungen an der Website.",
+          "Die Einträge sind auf Englisch und Deutsch vorhanden und folgen automatisch der gewählten Website Sprache.",
+          "Eine automatische Prüfung stellt sicher, dass wesentliche Änderungen an der Website künftig auch im Änderungsverlauf berücksichtigt werden."
+        ]
+      }
+    },
+    {
+      "date": "2026-09-18",
+      "version": "2.2.0",
+      "en": {
+        "title": "English/German switch and light/dark themes",
+        "items": [
+          "Added live switching between English and German across the website and its subpages.",
+          "Added persistent light and dark themes with the operating system preference used for first-time visitors.",
+          "Expanded translation and integrity checks for navigation, Toolbox content, file descriptions, BIOS, NVIDIA, Safety and Legacy pages."
+        ]
+      },
+      "de": {
+        "title": "Deutsch/Englisch Umschaltung und helles/dunkles Design",
+        "items": [
+          "Die gesamte Website einschließlich Unterseiten kann direkt zwischen Deutsch und Englisch umgeschaltet werden.",
+          "Ein dauerhaft gespeichertes helles und dunkles Design wurde ergänzt. Beim ersten Besuch wird die Systemeinstellung berücksichtigt.",
+          "Die Prüfungen für Übersetzungen und Website Integrität wurden auf Navigation, Toolbox Inhalte, Dateibeschreibungen, BIOS, NVIDIA, Sicherheit und Legacy Bereiche erweitert."
+        ]
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "version": "Site update",
+      "en": {
+        "title": "Complete downloads for related multi-file tools",
+        "items": [
+          "Added browser-generated ZIP downloads for tools that require multiple companion files.",
+          "Grouped cleanup, network reset, NVIDIA Inspector, Chocolatey installer, energy-mode workaround and selected legacy apply/restore pairs.",
+          "Added integrity checks so required bundle members cannot silently disappear from the Pages mirror."
+        ]
+      },
+      "de": {
+        "title": "Vollständige Downloads für zusammengehörige Tools",
+        "items": [
+          "Für Tools mit mehreren zusammengehörigen Dateien wurden direkt im Browser erzeugte ZIP Downloads ergänzt.",
+          "Unter anderem wurden Bereinigung, Netzwerk Reset, NVIDIA Inspector, Chocolatey Installer, Energy Mode Workaround und ausgewählte Legacy Paare zum Anwenden und Zurücksetzen gebündelt.",
+          "Integritätsprüfungen stellen sicher, dass benötigte Bestandteile dieser Pakete nicht unbemerkt aus dem Pages Spiegel verschwinden."
+        ]
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "version": "2.1.0",
+      "en": {
+        "title": "Toolbox and GitHub Pages expansion",
+        "items": [
+          "Imported and documented all 30 supplied Toolbox files without modifying their original bytes.",
+          "Added dedicated Network, NVIDIA, Cleanup, BIOS, Legacy, Safety and Files pages with direct downloads and SHA-256 references.",
+          "Added the self-contained Pages file mirror, custom domain configuration and expanded third-party licensing notes."
+        ]
+      },
+      "de": {
+        "title": "Erweiterung von Toolbox und GitHub Pages",
+        "items": [
+          "Alle 30 bereitgestellten Toolbox Dateien wurden unverändert übernommen und einzeln dokumentiert.",
+          "Eigene Seiten für Netzwerk, NVIDIA, Bereinigung, BIOS, Legacy, Sicherheit und Dateien wurden mit direkten Downloads und SHA 256 Referenzen ergänzt.",
+          "Der eigenständige Pages Dateispiegel, die Konfiguration der eigenen Domain und ausführlichere Hinweise zu Drittanbieter Lizenzen wurden hinzugefügt."
+        ]
+      }
+    },
+    {
+      "date": "2026-09-07",
+      "version": "2.0.0",
+      "en": {
+        "title": "Projects consolidated into one maintained toolkit",
+        "items": [
+          "Combined the Windows Workarounds / BIOS project and WFiles rebuild into one repository.",
+          "Separated maintained PowerShell utilities from historical high-impact material and added safer replacements where appropriate.",
+          "Unified documentation, licensing scope, static validation and GitHub Actions checks."
+        ]
+      },
+      "de": {
+        "title": "Projekte zu einem gepflegten Toolkit zusammengeführt",
+        "items": [
+          "Das Windows Workarounds / BIOS Projekt und der WFiles Neuaufbau wurden in einem Repository zusammengeführt.",
+          "Gepflegte PowerShell Werkzeuge wurden von historischem Material mit hoher Systemauswirkung getrennt und wo sinnvoll durch sicherere Varianten ersetzt.",
+          "Dokumentation, Lizenzumfang, statische Prüfungen und GitHub Actions Checks wurden vereinheitlicht."
+        ]
+      }
+    }
+  ]
+}
