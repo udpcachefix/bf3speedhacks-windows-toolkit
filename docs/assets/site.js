@@ -23,6 +23,7 @@ let currentTheme=savedTheme==='light'||savedTheme==='dark'
  : (window.matchMedia?.('(prefers-color-scheme: light)').matches?'light':'dark');
 
 function pageKey(){
+ if(originalTitle==='Not found · udp legacy') return '404';
  const file=(location.pathname.split('/').pop()||'index.html').split('?')[0].split('#')[0];
  return (file.replace(/\.html$/i,'')||'index');
 }
