@@ -2,7 +2,7 @@
 from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlparse, unquote
-import hashlib, re, sys, zipfile
+import hashlib, json, re, sys, zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "docs"
@@ -106,6 +106,43 @@ for bundle_name, members in expected_bundle_members.items():
         target = SITE / unquote(member.removeprefix("files/")) if False else SITE / unquote(member)
         if not target.is_file():
             errors.append(f"{bundle_name}: mirrored member is missing: {member}")
+
+
+# Website language/theme resources must remain complete and parseable.
+translation_dir = SITE / "assets" / "i18n" / "de"
+required_translation_sets = {
+    "common", "index", "toolbox", "files", "cleanup", "network",
+    "nvidia", "bios", "safety", "legacy", "windows", "404",
+}
+for name in sorted(required_translation_sets):
+    path = translation_dir / f"{name}.json"
+    if not path.is_file():
+        errors.append(f"Missing German website translation: {path.relative_to(ROOT)}")
+        continue
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        errors.append(f"Invalid German translation JSON {path.relative_to(ROOT)}: {exc}")
+        continue
+    if not isinstance(data, dict) or not data:
+        errors.append(f"German translation map is empty or not an object: {path.relative_to(ROOT)}")
+        continue
+    for source, translated in data.items():
+        if not isinstance(source, str) or not source.strip() or not isinstance(translated, str) or not translated.strip():
+            errors.append(f"Invalid translation entry in {path.relative_to(ROOT)}")
+
+style_css = (SITE / "assets" / "style.css").read_text(encoding="utf-8")
+for required_js_token in (
+    "bf3toolkit-language",
+    "bf3toolkit-theme",
+    "loadGermanMap",
+    "setLanguage",
+    "applyTheme",
+):
+    if required_js_token not in site_js:
+        errors.append(f"Missing website switcher implementation in site.js: {required_js_token}")
+if 'html[data-theme="light"]' not in style_css:
+    errors.append("Light-theme CSS selector is missing from style.css")
 
 # The private source label must not reappear in the current tree, website, or archive metadata.
 forbidden = bytes((97, 109, 105, 110))
