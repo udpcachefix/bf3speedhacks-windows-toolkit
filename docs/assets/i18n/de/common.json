@@ -79,5 +79,12 @@
   "Search files, paths and descriptions…": "Dateien, Pfade und Beschreibungen durchsuchen…",
   "Windows Toolkit · Static GitHub Pages site · MIT applies only within the scope stated in LICENSING.md.": "Windows Toolkit · Statische GitHub Pages Website · MIT gilt nur im in LICENSING.md beschriebenen Umfang.",
   "Windows Toolkit · Static GitHub Pages site · Verify hashes before executing downloaded files.": "Windows Toolkit · Statische GitHub Pages Website · Hashwerte vor dem Ausführen heruntergeladener Dateien prüfen.",
-  "Safety · udp legacy": "Sicherheit · udp legacy"
+  "Safety · udp legacy": "Sicherheit · udp legacy",
+  ", not": ", nicht",
+  ", and": ", und",
+  "and": "und",
+  "or": "oder",
+  "Uses": "Verwendet",
+  "File:": "Datei:",
+  "Profile:": "Profil:"
 }
