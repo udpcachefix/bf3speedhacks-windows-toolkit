@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0 - 2026-09-18
+
+* Added a live English/German switch across the GitHub Pages website without modifying downloadable scripts or source files.
+* Added technically reviewed German wording for navigation, documentation, risk labels, Toolbox entries, file-catalog descriptions, BIOS notes, NVIDIA notes, safety material, and legacy references.
+* Added persistent light/dark theme switching with operating-system theme detection for first-time visitors.
+* Added browser-local persistence for language and theme preferences.
+* Extended site-integrity checks to validate translation resources and the theme/language implementation.
+
 ## 2.1.0 - 2026-09-07
 
 * Added all 30 files from `Colleague.7z`, `Cleanup.7z`, `Network reset.7z`, and `nvidia.7z` under a function-based `toolbox/` structure without modifying their bytes.
